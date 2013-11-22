@@ -9,10 +9,11 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.text.Text;
 import org.andengine.entity.util.FPSLogger;
-import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.font.Font;
+import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
@@ -20,16 +21,14 @@ import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSourc
 import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
 import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
 import org.andengine.opengl.texture.region.ITextureRegion;
-import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.ui.activity.BaseGameActivity;  
+import org.andengine.util.adt.color.Color;
 
 public class GameEngine extends BaseGameActivity {
   public BoundCamera   mCamera;
   
   public static GameEngine instance;
   public Scene currentScene;
-
-  public ITextureRegion splash;
   
   public EngineOptions onCreateEngineOptions() {
     instance = this;
@@ -52,17 +51,13 @@ public class GameEngine extends BaseGameActivity {
   }
 
 
+  //only need to load starting resources and then afterwards once loading screen is set up,
+  //load remaining resources
   @Override
   public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws IOException {
-    BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("gfx/");
-    //BitmapTextureAtlas textureAtlas = 
-    //    new BitmapTextureAtlas(this.getTextureManager(), 820, 500, TextureOptions.BILINEAR_PREMULTIPLYALPHA);
-    
+    BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(Config.GFX_PATH);
     BuildableBitmapTextureAtlas buildableTextureAtlas = new BuildableBitmapTextureAtlas(this.getTextureManager(), 820, 500);
-
-    //splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(textureAtlas, this, "worldtile.png", 10, 10);
-    
-    splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, this, "splashscreen.png");
+    ITextureRegion splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, this, Config.TEX_SPLASH);
     
     try {
       buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
@@ -72,6 +67,13 @@ public class GameEngine extends BaseGameActivity {
     }
     
     buildableTextureAtlas.load();
+    ResourceManager.addTexture(splash, Config.TEX_SPLASH);
+    
+    Font loadfont = FontFactory.createFromAsset(this.getFontManager(), this.getTextureManager(), 
+        256, 256, this.getAssets(), Config.FON_GROBOLD, 32f, true, Color.WHITE_ABGR_PACKED_INT);
+    loadfont.prepareLetters(Config.PREPARE_ALPHA.toCharArray());
+    loadfont.load();
+    ResourceManager.addFont(loadfont, Config.FON_GROBOLD);
     
     pOnCreateResourcesCallback.onCreateResourcesFinished();
   }
@@ -81,7 +83,8 @@ public class GameEngine extends BaseGameActivity {
     mEngine.registerUpdateHandler(new FPSLogger());
 
     currentScene = new Scene();
-    Sprite bgsprite = new Sprite(Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2, splash, this.getVertexBufferObjectManager());
+    
+    Sprite bgsprite = ObjectFactory.createSprite(Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2, Config.TEX_SPLASH);
     currentScene.attachChild(bgsprite);
     
     pOnCreateSceneCallback.onCreateSceneFinished(this.currentScene);
@@ -94,6 +97,9 @@ public class GameEngine extends BaseGameActivity {
   @Override
   public void onPopulateScene(Scene pScene,
       OnPopulateSceneCallback pOnPopulateSceneCallback) throws IOException {
+    
+    Text temp = ObjectFactory.createText(Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2, Config.FON_GROBOLD, "testing");
+    currentScene.attachChild(temp);
     
     pOnPopulateSceneCallback.onPopulateSceneFinished();
   }

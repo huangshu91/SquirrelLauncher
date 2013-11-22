@@ -24,4 +24,11 @@ public interface Config {
   
   public static final float WALK_MODIFIER = 3.0f;
   public static final int PIXEL_METER_RATIO = 32;
+  
+  public static String GFX_PATH = "gfx/";
+  public static String TEX_SPLASH = "splashscreen.png";
+  
+  public static String FON_GROBOLD = "fonts/GROBOLD.ttf";
+  
+  public static String PREPARE_ALPHA = "abcdefghijklmnopqrstuvwxyz";
 }
