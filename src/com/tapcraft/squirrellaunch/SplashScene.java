@@ -1,38 +1,69 @@
 package com.tapcraft.squirrellaunch;
 
-import org.andengine.entity.modifier.LoopEntityModifier;
-import org.andengine.entity.modifier.MoveXModifier;
-import org.andengine.entity.modifier.ScaleModifier;
-import org.andengine.entity.modifier.SequenceEntityModifier;
+import org.andengine.entity.Entity;
+import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
-import org.andengine.ui.activity.BaseActivity;
 
 public class SplashScene extends Scene {
-  GameEngine parent;
+  private GameEngine parent;
+  
+  private Sprite bgsprite;
+  private Text   flavor;
+  
+  private String[] loadtext = {"charging capacitors", "loading capapults", "test1", "test2"};
+  private int loadindex;
+  
+  private Rectangle loadbarstroke;
+  private Rectangle loadbarback;
+  private Rectangle loadbarfill;
+  
+  private int barsize_w;
+  private int barsize_h;
+  private int curload_per;
+  
+  public static int BAR_SIZE_W = 310;
+  public static int BAR_SIZE_H = 50;
   
   public SplashScene() {
-    setBackground(new Background(0f, 0f, 0.500f));
     parent = GameEngine.getSharedInstance();
+    setBackground(new Background(0.3804f, 0.6274f, 0.500f));
 
     
-    //Text title = new Text(0, 0, parent.hudFont2, parent.getString(R.string.splash), parent.getVertexBufferObjectManager());
+    loadindex = 0;
+    bgsprite = ObjectFactory.createSprite(Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2, Config.TEX_SPLASH);
     
-    //title.setPosition(parent.mCamera.getWidth() / 2, parent.mCamera.getHeight() /2);
-    //title.setColor(1f, 1f, 0f);
+    loadbarstroke = ObjectFactory.createRect(Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2, BAR_SIZE_W + 10, BAR_SIZE_H + 10);
+    loadbarstroke.setColor(1.0f, 1.0f, 1.0f);
+    loadbarback = ObjectFactory.createRect(Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2, BAR_SIZE_W, BAR_SIZE_H);
+    loadbarback.setColor(0f, 0f, 0f);
     
-    //attachChild(title);
-    /*
-    final LoopEntityModifier entityModifier = new LoopEntityModifier(new SequenceEntityModifier(
-    new ScaleModifier(.7f, .5f, 1.0f, .5f, 1.0f),
-    new ScaleModifier(.7f, 1f, .8f, 1f, .8f),
-    new ScaleModifier(.7f, .8f, 1.0f, .8f, 1.0f),
-    new ScaleModifier(.7f, 1f, .8f, 1f, .8f),
-    new ScaleModifier(.7f, .8f, 1.0f, .8f, 1.0f),
-    new ScaleModifier(.7f, 1f, .8f, 1f, .8f)));
+    barsize_w = BAR_SIZE_W - 10;
+    barsize_h = BAR_SIZE_H - 10;
+    curload_per = 0;
     
-    title.registerEntityModifier(entityModifier);
-    */
+    loadbarfill = ObjectFactory.createRect(Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2, 3, barsize_h);
+    loadbarfill.setColor(0f, 0.9f, 0f);
+    
+    flavor = ObjectFactory.createText(Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2, Config.FON_GROBOLD, loadtext[loadindex]);
+    this.attachChild(bgsprite);
+    this.attachChild(loadbarstroke);
+    this.attachChild(loadbarback);
+    this.attachChild(loadbarfill);
+    this.attachChild(flavor);
+  }
+  
+  public void loadNext() {
+    
+  }
+  
+  public void finishLoad() {
+    //ding sound once finished
+    this.detachChild(loadbarstroke);
+    this.detachChild(loadbarback);
+    this.detachChild(loadbarfill);
+    this.detachChild(flavor);
   }
 }

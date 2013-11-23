@@ -9,8 +9,6 @@ import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.entity.scene.Scene;
-import org.andengine.entity.sprite.Sprite;
-import org.andengine.entity.text.Text;
 import org.andengine.entity.util.FPSLogger;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
@@ -70,7 +68,7 @@ public class GameEngine extends BaseGameActivity {
     ResourceManager.addTexture(splash, Config.TEX_SPLASH);
     
     Font loadfont = FontFactory.createFromAsset(this.getFontManager(), this.getTextureManager(), 
-        256, 256, this.getAssets(), Config.FON_GROBOLD, 32f, true, Color.WHITE_ABGR_PACKED_INT);
+        256, 256, this.getAssets(), Config.FON_GROBOLD, 24f, true, Color.WHITE_ABGR_PACKED_INT);
     loadfont.prepareLetters(Config.PREPARE_ALPHA.toCharArray());
     loadfont.load();
     ResourceManager.addFont(loadfont, Config.FON_GROBOLD);
@@ -82,10 +80,7 @@ public class GameEngine extends BaseGameActivity {
   public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) {
     mEngine.registerUpdateHandler(new FPSLogger());
 
-    currentScene = new Scene();
-    
-    Sprite bgsprite = ObjectFactory.createSprite(Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2, Config.TEX_SPLASH);
-    currentScene.attachChild(bgsprite);
+    currentScene = new SplashScene();
     
     pOnCreateSceneCallback.onCreateSceneFinished(this.currentScene);
   }
@@ -97,9 +92,6 @@ public class GameEngine extends BaseGameActivity {
   @Override
   public void onPopulateScene(Scene pScene,
       OnPopulateSceneCallback pOnPopulateSceneCallback) throws IOException {
-    
-    Text temp = ObjectFactory.createText(Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2, Config.FON_GROBOLD, "testing");
-    currentScene.attachChild(temp);
     
     pOnPopulateSceneCallback.onPopulateSceneFinished();
   }
