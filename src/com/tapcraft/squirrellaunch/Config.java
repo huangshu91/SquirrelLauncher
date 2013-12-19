@@ -11,6 +11,10 @@ public interface Config {
     SPLASH, MENU, PLAY
   }
   
+  public enum GameLevels {
+    LEVEL_ONE, LEVEL_TWO
+  }
+  
   // Test this resolution because there is some stretching
   public static final int CAMERA_WIDTH = 800;
   public static final int CAMERA_HEIGHT = 480;

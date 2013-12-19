@@ -22,6 +22,8 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.ui.activity.BaseGameActivity;  
 import org.andengine.util.adt.color.Color;
 
+import com.tapcraft.levels.World1Level1;
+
 public class GameEngine extends BaseGameActivity {
   public BoundCamera   mCamera;
   
@@ -47,15 +49,21 @@ public class GameEngine extends BaseGameActivity {
   public static GameEngine getSharedInstance() {
     return instance;
   }
-
+  
+  public void setCurrentScene(Scene newScene) {
+    currentScene = newScene;
+    getEngine().setScene(currentScene);
+  }
 
   //only need to load starting resources and then afterwards once loading screen is set up,
   //load remaining resources
   @Override
   public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws IOException {
     BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(Config.GFX_PATH);
-    BuildableBitmapTextureAtlas buildableTextureAtlas = new BuildableBitmapTextureAtlas(this.getTextureManager(), 820, 500);
-    ITextureRegion splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, this, Config.TEX_SPLASH);
+    BuildableBitmapTextureAtlas buildableTextureAtlas = 
+        new BuildableBitmapTextureAtlas(this.getTextureManager(), 820, 500);
+    ITextureRegion splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
+        this, Config.TEX_SPLASH);
     
     try {
       buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
@@ -80,7 +88,7 @@ public class GameEngine extends BaseGameActivity {
   public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) {
     mEngine.registerUpdateHandler(new FPSLogger());
 
-    currentScene = new SplashScene();
+    currentScene = new World1Level1();//new SplashScene();
     
     pOnCreateSceneCallback.onCreateSceneFinished(this.currentScene);
   }

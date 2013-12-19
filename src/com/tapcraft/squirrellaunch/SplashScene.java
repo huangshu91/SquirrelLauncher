@@ -16,9 +16,8 @@ public class SplashScene extends Scene {
   private String[] loadtext = {"charging capacitors", "loading capapults", "test1", "test2"};
   private int loadindex;
   
-  private Rectangle loadbarstroke;
-  private Rectangle loadbarback;
   private Rectangle loadbarfill;
+  private Entity loadbar;
   
   private int barsize_w;
   private int barsize_h;
@@ -30,15 +29,17 @@ public class SplashScene extends Scene {
   public SplashScene() {
     parent = GameEngine.getSharedInstance();
     setBackground(new Background(0.3804f, 0.6274f, 0.500f));
-
     
     loadindex = 0;
     bgsprite = ObjectFactory.createSprite(Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2, Config.TEX_SPLASH);
     
-    loadbarstroke = ObjectFactory.createRect(Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2, BAR_SIZE_W + 10, BAR_SIZE_H + 10);
+    Rectangle loadbarstroke = ObjectFactory.createRect(Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2, BAR_SIZE_W + 10, BAR_SIZE_H + 10);
     loadbarstroke.setColor(1.0f, 1.0f, 1.0f);
-    loadbarback = ObjectFactory.createRect(Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2, BAR_SIZE_W, BAR_SIZE_H);
+    Rectangle loadbarback = ObjectFactory.createRect(Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2, BAR_SIZE_W, BAR_SIZE_H);
     loadbarback.setColor(0f, 0f, 0f);
+    loadbar = new Entity();
+    loadbar.attachChild(loadbarstroke);
+    loadbar.attachChild(loadbarback);
     
     barsize_w = BAR_SIZE_W - 10;
     barsize_h = BAR_SIZE_H - 10;
@@ -49,8 +50,7 @@ public class SplashScene extends Scene {
     
     flavor = ObjectFactory.createText(Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2, Config.FON_GROBOLD, loadtext[loadindex]);
     this.attachChild(bgsprite);
-    this.attachChild(loadbarstroke);
-    this.attachChild(loadbarback);
+    this.attachChild(loadbar);
     this.attachChild(loadbarfill);
     this.attachChild(flavor);
   }
@@ -61,8 +61,7 @@ public class SplashScene extends Scene {
   
   public void finishLoad() {
     //ding sound once finished
-    this.detachChild(loadbarstroke);
-    this.detachChild(loadbarback);
+    this.detachChild(loadbar);
     this.detachChild(loadbarfill);
     this.detachChild(flavor);
   }
