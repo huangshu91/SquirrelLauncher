@@ -31,6 +31,7 @@ public interface Config {
   
   public static String GFX_PATH = "gfx/";
   public static String TEX_SPLASH = "splashscreen.png";
+  public static String PLAYER_SPRITE = "squirrelplayer.png";
   
   public static String FON_GROBOLD = "fonts/GROBOLD.ttf";
   

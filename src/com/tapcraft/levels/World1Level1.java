@@ -17,22 +17,21 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.tapcraft.entity.PlayerEntity;
 import com.tapcraft.squirrellaunch.Config;
 import com.tapcraft.squirrellaunch.GameEngine;
 import com.tapcraft.squirrellaunch.ObjectFactory;
 
-public class World1Level1 extends Scene{
-  private GameEngine parent;
+public class World1Level1 extends World{
   private BoundCamera mCamera;
-  
-  private PhysicsWorld physWorld;
   
   public static int WORLD_WIDTH = 1024;
   public static int WORLD_HEIGHT = 600;
   
-  private Entity bounds;
+  private PlayerEntity player;
   
   public World1Level1() {
+    super();
     parent = GameEngine.getSharedInstance();
     this.setBackground(new Background(0.4f, 0.4f, 0.4f));
     parent.setCurrentScene(this);
@@ -46,37 +45,22 @@ public class World1Level1 extends Scene{
     this.attachChild(flavor);
     //mCamera.setBoundsEnabled(true);
     
-    Rectangle test = ObjectFactory.createRect(0, Config.CAMERA_HEIGHT/2, 30, 30);
+    initPhysWorld();
+    initBounds(WORLD_WIDTH, WORLD_HEIGHT);
+    
+    Rectangle test = ObjectFactory.createRect(Config.CAMERA_WIDTH/4, Config.CAMERA_HEIGHT/2, 30, 30);
     test.setColor(1.0f, 1.0f, 1.0f);
+    Body physBody = PhysicsFactory.createBoxBody(physWorld, test, BodyType.DynamicBody, Config.FIXTURE_DEF);
+    physWorld.registerPhysicsConnector(new PhysicsConnector(test, physBody, true, true));
     this.attachChild(test);
     
-    initPhysWorld();
-    initBounds();
+    
+    player = new PlayerEntity(this, physWorld, Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2);
   }
   
   private void initPhysWorld() {
     physWorld = new FixedStepPhysicsWorld(Config.FPS, new Vector2(0, -SensorManager.GRAVITY_EARTH), false);
 
     registerUpdateHandler(physWorld);
-  }
-  
-  private void initBounds() {
-    Rectangle top = ObjectFactory.createRect(WORLD_WIDTH/2, WORLD_HEIGHT+1, WORLD_WIDTH, 2);
-    Rectangle bot = ObjectFactory.createRect(WORLD_WIDTH/2, 0-1, WORLD_WIDTH, 2);
-    Rectangle lef = ObjectFactory.createRect(0-1, WORLD_HEIGHT/2, 2, WORLD_HEIGHT);
-    Rectangle rig = ObjectFactory.createRect(WORLD_WIDTH+1, WORLD_HEIGHT/2, 2, WORLD_HEIGHT);
-    
-    FixtureDef wallDef = PhysicsFactory.createFixtureDef(0, 0.5f, 0.5f);
-    PhysicsFactory.createBoxBody(physWorld, top, BodyType.StaticBody, wallDef);
-    PhysicsFactory.createBoxBody(physWorld, bot, BodyType.StaticBody, wallDef);
-    PhysicsFactory.createBoxBody(physWorld, rig, BodyType.StaticBody, wallDef);
-    PhysicsFactory.createBoxBody(physWorld, lef, BodyType.StaticBody, wallDef);
-    
-    bounds.attachChild(top);
-    bounds.attachChild(bot);
-    bounds.attachChild(lef);
-    bounds.attachChild(rig);
-    
-    this.attachChild(bounds);
   }
 }

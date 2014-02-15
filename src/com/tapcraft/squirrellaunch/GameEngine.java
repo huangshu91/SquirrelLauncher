@@ -75,6 +75,21 @@ public class GameEngine extends BaseGameActivity {
     buildableTextureAtlas.load();
     ResourceManager.addTexture(splash, Config.TEX_SPLASH);
     
+    buildableTextureAtlas = 
+        new BuildableBitmapTextureAtlas(this.getTextureManager(), 360, 360);
+    splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
+        this, Config.PLAYER_SPRITE);
+    
+    try {
+      buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
+      
+    } catch (TextureAtlasBuilderException e) {
+      e.printStackTrace();
+    }
+    
+    buildableTextureAtlas.load();
+    ResourceManager.addTexture(splash, Config.PLAYER_SPRITE);
+    
     Font loadfont = FontFactory.createFromAsset(this.getFontManager(), this.getTextureManager(), 
         256, 256, this.getAssets(), Config.FON_GROBOLD, 24f, true, Color.WHITE_ABGR_PACKED_INT);
     loadfont.prepareLetters(Config.PREPARE_ALPHA.toCharArray());
