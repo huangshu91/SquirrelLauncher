@@ -1,5 +1,6 @@
 package com.tapcraft.squirrellaunch;
 
+import org.andengine.entity.primitive.Line;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
@@ -17,6 +18,11 @@ public class ObjectFactory {
   
   public static Rectangle createRect(float x, float y, float w, float h) {
     return new Rectangle(x,y,w,h,
+        GameEngine.getSharedInstance().getVertexBufferObjectManager());
+  }
+  
+  public static Line createLine(float x, float y, float w, float h) {
+    return new Line(x,y,w,h,
         GameEngine.getSharedInstance().getVertexBufferObjectManager());
   }
 }

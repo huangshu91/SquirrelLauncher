@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.tapcraft.entity.Cannon;
 import com.tapcraft.entity.PlayerEntity;
 import com.tapcraft.squirrellaunch.Config;
 import com.tapcraft.squirrellaunch.GameEngine;
@@ -27,8 +28,6 @@ public class World1Level1 extends World{
   
   public static int WORLD_WIDTH = 1024;
   public static int WORLD_HEIGHT = 600;
-  
-  private PlayerEntity player;
   
   public World1Level1() {
     super();
@@ -48,14 +47,10 @@ public class World1Level1 extends World{
     initPhysWorld();
     initBounds(WORLD_WIDTH, WORLD_HEIGHT);
     
-    Rectangle test = ObjectFactory.createRect(Config.CAMERA_WIDTH/4, Config.CAMERA_HEIGHT/2, 30, 30);
-    test.setColor(1.0f, 1.0f, 1.0f);
-    Body physBody = PhysicsFactory.createBoxBody(physWorld, test, BodyType.DynamicBody, Config.FIXTURE_DEF);
-    physWorld.registerPhysicsConnector(new PhysicsConnector(test, physBody, true, true));
-    this.attachChild(test);
+    cannon = new Cannon(this, 250,200);
+    //player = new PlayerEntity(this, Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2);
     
-    
-    player = new PlayerEntity(this, physWorld, Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2);
+    cannonActive = true;
   }
   
   private void initPhysWorld() {
@@ -63,4 +58,5 @@ public class World1Level1 extends World{
 
     registerUpdateHandler(physWorld);
   }
+  
 }

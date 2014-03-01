@@ -32,8 +32,21 @@ public interface Config {
   public static String GFX_PATH = "gfx/";
   public static String TEX_SPLASH = "splashscreen.png";
   public static String PLAYER_SPRITE = "squirrelplayer.png";
+  public static String CANNON = "cannon.png";
   
   public static String FON_GROBOLD = "fonts/GROBOLD.ttf";
   
   public static String PREPARE_ALPHA = "abcdefghijklmnopqrstuvwxyz";
+  
+  //CONSTANTS
+  
+  public static float[] IMPULSE = { 40.0f, 0 };
+  
+  //BUTTONS
+  
+  public static String LAUNCH = "cannonlaunch.png";
+  
+  //DEBUG
+  
+  public static boolean DEBUG = true;
 }
