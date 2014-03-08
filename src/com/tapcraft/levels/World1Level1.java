@@ -26,11 +26,11 @@ import com.tapcraft.squirrellaunch.ObjectFactory;
 public class World1Level1 extends World{
   private BoundCamera mCamera;
   
-  public static int WORLD_WIDTH = 1024;
-  public static int WORLD_HEIGHT = 600;
+  public static int WIDTH = 1024;
+  public static int HEIGHT = 600;
   
   public World1Level1() {
-    super();
+    super(WIDTH, HEIGHT);
     parent = GameEngine.getSharedInstance();
     this.setBackground(new Background(0.4f, 0.4f, 0.4f));
     parent.setCurrentScene(this);
@@ -45,7 +45,7 @@ public class World1Level1 extends World{
     //mCamera.setBoundsEnabled(true);
     
     initPhysWorld();
-    initBounds(WORLD_WIDTH, WORLD_HEIGHT);
+    initBounds();
     
     cannon = new Cannon(this, 250,200);
     //player = new PlayerEntity(this, Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2);

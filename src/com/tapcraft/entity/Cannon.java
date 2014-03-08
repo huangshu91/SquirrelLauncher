@@ -1,25 +1,42 @@
 package com.tapcraft.entity;
 
+import java.util.Vector;
+
+import org.andengine.entity.Entity;
+import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
+import org.andengine.extension.physics.box2d.PhysicsConnector;
+import org.andengine.extension.physics.box2d.PhysicsFactory;
+import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.util.math.MathUtils;
 
+import android.hardware.SensorManager;
+
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.tapcraft.levels.World;
 import com.tapcraft.squirrellaunch.Config;
 import com.tapcraft.squirrellaunch.GameEngine;
+import com.tapcraft.squirrellaunch.ObjectFactory;
 import com.tapcraft.squirrellaunch.ResourceManager;
 import com.tapcraft.util.Logger;
 
-public class Cannon extends Entity{
+public class Cannon extends EntityObj{
   private AnimatedSprite sprite;
   private Sprite squirrel;
   
   private Sprite but;
+  private Entity traj;
   
   private boolean active;
+  
+  private PhysicsWorld simWorld;
   
   public Cannon(World w, int x, int y) {
     super(w, x, y);
@@ -52,11 +69,31 @@ public class Cannon extends Entity{
           a.x = pSceneTouchEvent.getX();
           a.y = pSceneTouchEvent.getY();
           
+          Cannon parent = (Cannon)getUserData();
+          parent.simulate();
+          
           break;
         }
         return true;
       }
     };
+    
+    traj = new Entity();
+    simWorld = new FixedStepPhysicsWorld(Config.FPS, new Vector2(0, -SensorManager.GRAVITY_EARTH), true);
+    
+    Entity bounds;
+    int WORLD_WIDTH = 1024;
+    int WORLD_HEIGHT = 600;
+    Rectangle top = ObjectFactory.createRect(WORLD_WIDTH, WORLD_HEIGHT+1, WORLD_WIDTH, 2);
+    Rectangle bot = ObjectFactory.createRect(WORLD_WIDTH/2, -1, WORLD_WIDTH, 2);
+    Rectangle lef = ObjectFactory.createRect(0-1, WORLD_HEIGHT/2, 2, WORLD_HEIGHT);
+    Rectangle rig = ObjectFactory.createRect(WORLD_WIDTH+1, WORLD_HEIGHT/2, 2, WORLD_HEIGHT);
+    
+    FixtureDef wallDef = PhysicsFactory.createFixtureDef(0, 0.5f, 0.5f);
+    PhysicsFactory.createBoxBody(simWorld, top, BodyType.StaticBody, wallDef);
+    PhysicsFactory.createBoxBody(simWorld, bot, BodyType.StaticBody, wallDef);
+    PhysicsFactory.createBoxBody(simWorld, rig, BodyType.StaticBody, wallDef);
+    PhysicsFactory.createBoxBody(simWorld, lef, BodyType.StaticBody, wallDef);
     
     squirrel = new Sprite(sprite.getWidth()-4, sprite.getHeight()/2-12, ResourceManager.textureHashMap.get(Config.PLAYER_SPRITE), 
         GameEngine.getSharedInstance().getVertexBufferObjectManager());
@@ -66,6 +103,7 @@ public class Cannon extends Entity{
     
     sprite.setRotationCenter(0.5f,  0.5f);
     sprite.animate(300);
+    sprite.setUserData(this);
     
     parent.registerTouchArea(sprite);
     parent.attachChild(sprite);
@@ -85,6 +123,7 @@ public class Cannon extends Entity{
     but.setUserData(this);
     parent.registerTouchArea(but);
     parent.attachChild(but);
+    //parent.registerUpdateHandler(simWorld);
     
     active = true;
   }
@@ -93,26 +132,58 @@ public class Cannon extends Entity{
     parent.detachChild(sprite);
   }
   
+  public void simulate() {
+    parent.detachChild(traj);
+    traj.detachChildren();
+    
+    float degrees = -1*sprite.getRotation();
+    float[] location = squirrel.convertLocalCoordinatesToSceneCoordinates(squirrel.getWidth()/2, squirrel.getHeight()/2);
+    
+    float impx = (float) (Config.IMPULSE[0]*Math.cos(Math.toRadians(degrees)) - Config.IMPULSE[1]*Math.sin(degrees));
+    float impy = (float) (Config.IMPULSE[0]*Math.sin(Math.toRadians(degrees)) + Config.IMPULSE[1]*Math.cos(degrees));
+    Vector2 newv = new Vector2(impx, impy);
+    
+    Sprite temp = new Sprite(location[0], location[1], ResourceManager.textureHashMap.get(Config.PLAYER_SPRITE), 
+        GameEngine.getSharedInstance().getVertexBufferObjectManager());
+    Body simBody = PhysicsFactory.createCircleBody(simWorld, temp, 
+        BodyType.DynamicBody, Config.FIXTURE_DEF);
+    
+    PhysicsConnector pcon = new PhysicsConnector(temp, simBody, true, true);
+    simWorld.registerPhysicsConnector(pcon);
+    simBody.applyLinearImpulse(newv, simBody.getWorldCenter());
+    
+    for (int i = 0; i < 30; i++) {
+      simWorld.onUpdate(1/10f);
+      AnimatedSprite circle = ObjectFactory.createAnimSprite(temp.getX(), temp.getY(), Config.CIRCLE);
+      circle.setScale(0.1f);
+      traj.attachChild(circle);
+    }
+    
+    simWorld.unregisterPhysicsConnector(pcon);
+    simBody.setActive(false);
+    simWorld.destroyBody(simBody);
+    parent.attachChild(traj);
+  }
+  
   public void launch() {
     if (!active) return;
     
     float degrees = -1*sprite.getRotation();
     float[] location = squirrel.convertLocalCoordinatesToSceneCoordinates(squirrel.getWidth()/2, squirrel.getHeight()/2);
     PlayerEntity player = new PlayerEntity(parent, location[0], location[1]);
-    //Logger.d(location[0] + " : " + location[1]);
     parent.setPlayer(player);
     
     float impx = (float) (Config.IMPULSE[0]*Math.cos(Math.toRadians(degrees)) - Config.IMPULSE[1]*Math.sin(degrees));
     float impy = (float) (Config.IMPULSE[0]*Math.sin(Math.toRadians(degrees)) + Config.IMPULSE[1]*Math.cos(degrees));
     Vector2 newv = new Vector2(impx, impy);
-    //Logger.d("degrees: "+degrees);
-    //Logger.d(newv.x + " : " + newv.y);
     player.launch(newv);
     
     active = false;
     parent.detachChild(but);
     parent.unregisterTouchArea(but);
+    parent.unregisterTouchArea(sprite);
     sprite.detachChild(squirrel);
+    //parent.detachChild(traj);
   }
   
 }

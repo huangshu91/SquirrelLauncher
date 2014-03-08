@@ -30,8 +30,13 @@ public class World extends Scene {
 
   protected boolean cannonActive;
   
-  public World() {
+  protected int WORLD_WIDTH;
+  protected int WORLD_HEIGHT;
+  
+  public World(int w, int h) {
     parent = GameEngine.getSharedInstance();
+    WORLD_WIDTH = w;
+    WORLD_HEIGHT = h;
 
     bounds = new Entity();
 
@@ -47,8 +52,7 @@ public class World extends Scene {
     return physWorld;
   }
   
-  
-  public void initBounds(int WORLD_WIDTH, int WORLD_HEIGHT) {
+  public void initBounds() {
     Rectangle top = ObjectFactory.createRect(WORLD_WIDTH, WORLD_HEIGHT+1, WORLD_WIDTH, 2);
     Rectangle bot = ObjectFactory.createRect(WORLD_WIDTH/2, -1, WORLD_WIDTH, 2);
     Rectangle lef = ObjectFactory.createRect(0-1, WORLD_HEIGHT/2, 2, WORLD_HEIGHT);

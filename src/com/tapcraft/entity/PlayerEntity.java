@@ -15,7 +15,7 @@ import com.tapcraft.squirrellaunch.Config;
 import com.tapcraft.squirrellaunch.GameEngine;
 import com.tapcraft.squirrellaunch.ResourceManager;
 
-public class PlayerEntity extends Entity{
+public class PlayerEntity extends EntityObj{
   private Sprite sprite;
   
   private Body physBody;
@@ -40,7 +40,8 @@ public class PlayerEntity extends Entity{
       }
     };
     
-    physBody = PhysicsFactory.createCircleBody(physWorld, sprite, BodyType.DynamicBody, Config.FIXTURE_DEF);
+    physBody = PhysicsFactory.createCircleBody(physWorld, sprite, 
+        BodyType.DynamicBody, Config.FIXTURE_DEF);
     physWorld.registerPhysicsConnector(new PhysicsConnector(sprite, physBody, true, true));
     sprite.setUserData(physBody);
     
@@ -51,5 +52,11 @@ public class PlayerEntity extends Entity{
   
   public void launch(Vector2 impulse) {
     physBody.applyLinearImpulse(impulse, physBody.getWorldCenter());
+    /*
+    for (int i = 0 ; i < 30; i++) {
+      physWorld.onUpdate(1/30f);
+    }
+    */
   }
+  
 }

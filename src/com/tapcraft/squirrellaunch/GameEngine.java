@@ -110,10 +110,25 @@ public class GameEngine extends BaseGameActivity {
     buildableTextureAtlas.load();
     ResourceManager.addTexture(splash, Config.PLAYER_SPRITE);
     
+    //load simulation circle animated sprite
+    buildableTextureAtlas = 
+        new BuildableBitmapTextureAtlas(this.getTextureManager(), 400, 400, TextureOptions.BILINEAR);
+    TiledTextureRegion tiled = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(buildableTextureAtlas, 
+        this, Config.CIRCLE, 2, 2);
+    
+    try {
+      buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
+    } catch (TextureAtlasBuilderException e) {
+      e.printStackTrace();
+    }
+    
+    buildableTextureAtlas.load();
+    ResourceManager.addTexture(tiled, Config.CIRCLE);
+    
     //load cannon sprite
     buildableTextureAtlas = 
         new BuildableBitmapTextureAtlas(this.getTextureManager(), 400, 330, TextureOptions.BILINEAR);
-    TiledTextureRegion tiled = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(buildableTextureAtlas, 
+    tiled = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(buildableTextureAtlas, 
         this, Config.CANNON, 1, 2);
     
     try {

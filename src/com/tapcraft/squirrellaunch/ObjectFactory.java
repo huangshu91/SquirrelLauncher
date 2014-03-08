@@ -3,7 +3,9 @@ package com.tapcraft.squirrellaunch;
 import org.andengine.entity.primitive.Line;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.text.Text;
+import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
 public class ObjectFactory {
   public static Sprite createSprite(float x, float y, String texture) {
@@ -23,6 +25,11 @@ public class ObjectFactory {
   
   public static Line createLine(float x, float y, float w, float h) {
     return new Line(x,y,w,h,
+        GameEngine.getSharedInstance().getVertexBufferObjectManager());
+  }
+  
+  public static AnimatedSprite createAnimSprite(float x, float y, String texture) {
+    return new AnimatedSprite(x, y, (ITiledTextureRegion)ResourceManager.textureHashMap.get(texture), 
         GameEngine.getSharedInstance().getVertexBufferObjectManager());
   }
 }
