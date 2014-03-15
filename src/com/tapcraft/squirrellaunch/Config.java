@@ -51,4 +51,16 @@ public interface Config {
   public static String PLAYER_SPRITE = "squirrelplayer.png";
   public static String CANNON = "cannon.png";
   public static String CIRCLE = "sim_circle_anim.png";
+  public static String ACORN = "acornshine.png";
+  public static String BUTTON = "hud_button.png";
+  
+  //CAMERA
+  public static float CAM_VEL = 300;
+  public static float CAM_ZOOM_VEL = 5;
+  public static float MAX_ZOOM = 1.0f;
+  public static float MIN_ZOOM = 0.5f;
+  
+  //PHYSICS
+  public static String PLAYER_ID = "player";
+  public static String ACORN_ID = "acorn";
 }

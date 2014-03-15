@@ -3,7 +3,6 @@ package com.tapcraft.entity;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
-import org.andengine.extension.physics.box2d.PhysicsWorld;
 import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 import org.andengine.input.touch.TouchEvent;
 
@@ -18,7 +17,7 @@ import com.tapcraft.squirrellaunch.ResourceManager;
 public class PlayerEntity extends EntityObj{
   private Sprite sprite;
   
-  private Body physBody;
+  public Body physBody;
   
   public PlayerEntity(World w, float x, float y) {
     super(w, x, y);
@@ -26,7 +25,8 @@ public class PlayerEntity extends EntityObj{
       @Override
       public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, 
           final float pTouchAreaLocalY) {
-        final Body myBod = (Body)getUserData();
+        
+        final Body myBod = physBody;
         myBod.setAwake(false);
         myBod.setTransform(pSceneTouchEvent.getX()/PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, 
             pSceneTouchEvent.getY()/PhysicsConstants.PIXEL_TO_METER_RATIO_DEFAULT, myBod.getAngle());
@@ -43,7 +43,7 @@ public class PlayerEntity extends EntityObj{
     physBody = PhysicsFactory.createCircleBody(physWorld, sprite, 
         BodyType.DynamicBody, Config.FIXTURE_DEF);
     physWorld.registerPhysicsConnector(new PhysicsConnector(sprite, physBody, true, true));
-    sprite.setUserData(physBody);
+    sprite.setUserData(Config.PLAYER_ID);
     
     parent.registerTouchArea(sprite);
     parent.attachChild(sprite);
@@ -52,11 +52,7 @@ public class PlayerEntity extends EntityObj{
   
   public void launch(Vector2 impulse) {
     physBody.applyLinearImpulse(impulse, physBody.getWorldCenter());
-    /*
-    for (int i = 0 ; i < 30; i++) {
-      physWorld.onUpdate(1/30f);
-    }
-    */
+    parent.getCamera().setChaseEntity(sprite);
   }
   
 }

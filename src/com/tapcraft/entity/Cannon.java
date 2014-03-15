@@ -1,7 +1,5 @@
 package com.tapcraft.entity;
 
-import java.util.Vector;
-
 import org.andengine.entity.Entity;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.AnimatedSprite;
@@ -35,8 +33,7 @@ public class Cannon extends EntityObj{
   private Entity traj;
   
   private boolean active;
-  
-  private PhysicsWorld simWorld;
+  private boolean locked;
   
   public Cannon(World w, int x, int y) {
     super(w, x, y);
@@ -48,10 +45,12 @@ public class Cannon extends EntityObj{
       @Override
       public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, 
       final float pTouchAreaLocalY) {
+        if (locked) return true;
         switch(pSceneTouchEvent.getAction()) {
         case TouchEvent.ACTION_DOWN:
           a.x = pSceneTouchEvent.getX();
           a.y = pSceneTouchEvent.getY();
+          ((Cannon)getUserData()).toggleCamera();
           break;
         case TouchEvent.ACTION_MOVE:
           Vector2 ba = new Vector2(a.x - b.x, a.y - b.y);
@@ -64,8 +63,6 @@ public class Cannon extends EntityObj{
           float degrees = MathUtils.radToDeg(alpha);
           setRotation(getRotation()+-degrees);
           
-          //Logger.d("degrees: "+getRotation());
-          
           a.x = pSceneTouchEvent.getX();
           a.y = pSceneTouchEvent.getY();
           
@@ -73,29 +70,18 @@ public class Cannon extends EntityObj{
           parent.simulate();
           
           break;
+        case TouchEvent.ACTION_UP:
+          ((Cannon)getUserData()).toggleCamera();
+          break;
         }
         return true;
       }
     };
-    
+    sprite.setScale(0.8f, 1.0f);
+    locked = false;
     traj = new Entity();
-    simWorld = new FixedStepPhysicsWorld(Config.FPS, new Vector2(0, -SensorManager.GRAVITY_EARTH), true);
     
-    Entity bounds;
-    int WORLD_WIDTH = 1024;
-    int WORLD_HEIGHT = 600;
-    Rectangle top = ObjectFactory.createRect(WORLD_WIDTH, WORLD_HEIGHT+1, WORLD_WIDTH, 2);
-    Rectangle bot = ObjectFactory.createRect(WORLD_WIDTH/2, -1, WORLD_WIDTH, 2);
-    Rectangle lef = ObjectFactory.createRect(0-1, WORLD_HEIGHT/2, 2, WORLD_HEIGHT);
-    Rectangle rig = ObjectFactory.createRect(WORLD_WIDTH+1, WORLD_HEIGHT/2, 2, WORLD_HEIGHT);
-    
-    FixtureDef wallDef = PhysicsFactory.createFixtureDef(0, 0.5f, 0.5f);
-    PhysicsFactory.createBoxBody(simWorld, top, BodyType.StaticBody, wallDef);
-    PhysicsFactory.createBoxBody(simWorld, bot, BodyType.StaticBody, wallDef);
-    PhysicsFactory.createBoxBody(simWorld, rig, BodyType.StaticBody, wallDef);
-    PhysicsFactory.createBoxBody(simWorld, lef, BodyType.StaticBody, wallDef);
-    
-    squirrel = new Sprite(sprite.getWidth()-4, sprite.getHeight()/2-12, ResourceManager.textureHashMap.get(Config.PLAYER_SPRITE), 
+    squirrel = new Sprite(sprite.getWidth()-4, sprite.getHeight()/2-14, ResourceManager.textureHashMap.get(Config.PLAYER_SPRITE), 
         GameEngine.getSharedInstance().getVertexBufferObjectManager());
     
     sprite.attachChild(squirrel);
@@ -123,9 +109,17 @@ public class Cannon extends EntityObj{
     but.setUserData(this);
     parent.registerTouchArea(but);
     parent.attachChild(but);
-    //parent.registerUpdateHandler(simWorld);
     
     active = true;
+    simulate();
+  }
+  
+  public void toggleCamera() {
+    parent.getCameraMan().active = !parent.getCameraMan().active;
+  }
+  
+  public void toggleLock() {
+    locked = !locked;
   }
   
   public void remove() {
@@ -142,6 +136,7 @@ public class Cannon extends EntityObj{
     float impx = (float) (Config.IMPULSE[0]*Math.cos(Math.toRadians(degrees)) - Config.IMPULSE[1]*Math.sin(degrees));
     float impy = (float) (Config.IMPULSE[0]*Math.sin(Math.toRadians(degrees)) + Config.IMPULSE[1]*Math.cos(degrees));
     Vector2 newv = new Vector2(impx, impy);
+    PhysicsWorld simWorld = parent.getSimWorld();
     
     Sprite temp = new Sprite(location[0], location[1], ResourceManager.textureHashMap.get(Config.PLAYER_SPRITE), 
         GameEngine.getSharedInstance().getVertexBufferObjectManager());
@@ -155,6 +150,7 @@ public class Cannon extends EntityObj{
     for (int i = 0; i < 30; i++) {
       simWorld.onUpdate(1/10f);
       AnimatedSprite circle = ObjectFactory.createAnimSprite(temp.getX(), temp.getY(), Config.CIRCLE);
+      if (i%2 == 0) circle.animate(150);
       circle.setScale(0.1f);
       traj.attachChild(circle);
     }
@@ -172,6 +168,8 @@ public class Cannon extends EntityObj{
     float[] location = squirrel.convertLocalCoordinatesToSceneCoordinates(squirrel.getWidth()/2, squirrel.getHeight()/2);
     PlayerEntity player = new PlayerEntity(parent, location[0], location[1]);
     parent.setPlayer(player);
+    
+    parent.getCamera().setCenter(location[0], location[1]);
     
     float impx = (float) (Config.IMPULSE[0]*Math.cos(Math.toRadians(degrees)) - Config.IMPULSE[1]*Math.sin(degrees));
     float impy = (float) (Config.IMPULSE[0]*Math.sin(Math.toRadians(degrees)) + Config.IMPULSE[1]*Math.cos(degrees));
