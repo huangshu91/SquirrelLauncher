@@ -30,8 +30,5 @@ public class World1Level1 extends World{
     
     cannonActive = true;
   }
-  
-  public void camTouch() {
-    cannon.toggleLock();
-  }
+
 }

@@ -11,6 +11,7 @@ import org.andengine.input.touch.detector.ScrollDetector;
 import org.andengine.input.touch.detector.ScrollDetector.IScrollDetectorListener;
 import org.andengine.input.touch.detector.SurfaceScrollDetector;
 
+import com.badlogic.gdx.math.Vector2;
 import com.tapcraft.levels.World;
 import com.tapcraft.util.Logger;
 
@@ -27,7 +28,10 @@ public class CameraManager implements IOnSceneTouchListener,
   private SurfaceScrollDetector scroll;
 
   private float                 startZoom;
-  public boolean               active;
+  public boolean                active;
+  public boolean                scrolling;
+  
+  private Vector2               scrollOffset;
 
   public CameraManager() {
     parent = GameEngine.getSharedInstance();
@@ -44,8 +48,8 @@ public class CameraManager implements IOnSceneTouchListener,
       Logger.d("no multitouch");
     }
 
+    scrollOffset = new Vector2(0, 0);
     mCamera.setZoomFactor(0.8f);
-
   }
 
   public SmoothCamera getCamera() {
@@ -59,29 +63,35 @@ public class CameraManager implements IOnSceneTouchListener,
   @Override
   public void onScrollStarted(ScrollDetector pScollDetector, int pPointerID,
       float pDistanceX, float pDistanceY) {
-    if (curWorld != null) curWorld.camTouch();
+    if (curWorld != null) curWorld.camStart();
+    scrollOffset.x = 0;
+    scrollOffset.y = 0;
   }
 
   @Override
   public void onScroll(ScrollDetector pScollDetector, int pPointerID,
       float pDistanceX, float pDistanceY) {
     final float zoomFactor = mCamera.getZoomFactor();
-    mCamera.offsetCenter(-pDistanceX*6f / zoomFactor, pDistanceY*1.5f / zoomFactor);
+    mCamera.offsetCenter(-pDistanceX*1.5f / zoomFactor, pDistanceY*1.5f / zoomFactor);
+    
+    scrollOffset.x += pDistanceX;
+    scrollOffset.y += pDistanceY;
   }
 
   @Override
   public void onScrollFinished(ScrollDetector pScollDetector, int pPointerID,
       float pDistanceX, float pDistanceY) {
     final float zoomFactor = mCamera.getZoomFactor();
-    mCamera.offsetCenter(-pDistanceX*10f / zoomFactor, pDistanceY*1.5f / zoomFactor);
-    if (curWorld != null) curWorld.camTouch();
+    mCamera.offsetCenter((-scrollOffset.x/2) / zoomFactor, (scrollOffset.y/2) / zoomFactor);
+    
+    if (curWorld != null) curWorld.camEnd();
   }
 
   @Override
   public void onPinchZoomStarted(PinchZoomDetector pPinchZoomDetector,
       TouchEvent pSceneTouchEvent) {
     startZoom = mCamera.getZoomFactor();
-    if (curWorld != null) curWorld.camTouch();
+    if (curWorld != null) curWorld.camStart();
   }
 
   @Override
@@ -89,7 +99,11 @@ public class CameraManager implements IOnSceneTouchListener,
       TouchEvent pTouchEvent, float pZoomFactor) {
     if (pZoomFactor != 1) {
       float newZoom = startZoom * pZoomFactor;
-
+      
+      //this code to limit zoom lags, investigate in future
+      //if (Config.CAMERA_HEIGHT/newZoom > curWorld.getWorldHeight() || 
+      //    Config.CAMERA_WIDTH/newZoom > curWorld.getWorldWidth()) return;
+      
       if (newZoom < Config.MAX_ZOOM && newZoom > Config.MIN_ZOOM) 
         mCamera.setZoomFactor(newZoom);
     }
@@ -99,7 +113,7 @@ public class CameraManager implements IOnSceneTouchListener,
   @Override
   public void onPinchZoomFinished(PinchZoomDetector pPinchZoomDetector,
       TouchEvent pTouchEvent, float pZoomFactor) {
-    if (curWorld != null) curWorld.camTouch();
+    if (curWorld != null) curWorld.camEnd();
   }
 
   @Override

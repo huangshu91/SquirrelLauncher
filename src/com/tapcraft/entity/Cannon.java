@@ -33,7 +33,7 @@ public class Cannon extends EntityObj{
   private Entity traj;
   
   private boolean active;
-  private boolean locked;
+  public boolean locked;
   
   public Cannon(World w, int x, int y) {
     super(w, x, y);
@@ -116,10 +116,6 @@ public class Cannon extends EntityObj{
   
   public void toggleCamera() {
     parent.getCameraMan().active = !parent.getCameraMan().active;
-  }
-  
-  public void toggleLock() {
-    locked = !locked;
   }
   
   public void remove() {

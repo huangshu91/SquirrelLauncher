@@ -55,7 +55,7 @@ public interface Config {
   public static String BUTTON = "hud_button.png";
   
   //CAMERA
-  public static float CAM_VEL = 300;
+  public static float CAM_VEL = 400;
   public static float CAM_ZOOM_VEL = 5;
   public static float MAX_ZOOM = 1.0f;
   public static float MIN_ZOOM = 0.5f;

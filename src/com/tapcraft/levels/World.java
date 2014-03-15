@@ -63,6 +63,14 @@ public class World extends Scene {
     initHud();
   }
   
+  public int getWorldWidth() {
+    return WORLD_WIDTH;
+  }
+  
+  public int getWorldHeight() {
+    return WORLD_HEIGHT;
+  }
+  
   public PhysicsWorld getPhysWorld() {
     return physWorld;
   }
@@ -139,8 +147,14 @@ public class World extends Scene {
     registerUpdateHandler(physWorld);
   }
   
-  public void camTouch() {
-    
+  public void camStart() {
+    if (cannon != null)
+      cannon.locked = true;
+  }
+  
+  public void camEnd() {
+    if (cannon != null)
+      cannon.locked = false;
   }
   
   public void beatWorld() {
