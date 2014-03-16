@@ -21,8 +21,8 @@ import com.tapcraft.entity.PlayerEntity;
 import com.tapcraft.squirrellaunch.CameraManager;
 import com.tapcraft.squirrellaunch.Config;
 import com.tapcraft.squirrellaunch.GameEngine;
+import com.tapcraft.squirrellaunch.HudManager;
 import com.tapcraft.squirrellaunch.ObjectFactory;
-import com.tapcraft.util.Logger;
 
 public class World extends Scene {
   protected GameEngine parent;
@@ -32,6 +32,7 @@ public class World extends Scene {
   protected Entity bounds;
   protected Entity debug;
   
+  protected HudManager hudMan;
   protected HUD gameHud;
   protected CameraManager cameraMan;
   protected SmoothCamera mCamera;
@@ -57,10 +58,9 @@ public class World extends Scene {
 
     setTouchAreaBindingOnActionDownEnabled(true);
     
-    gameHud = new HUD();
-    mCamera.setHUD(gameHud);
+    //gameHud = new HUD();
+    //mCamera.setHUD(gameHud);
     
-    initHud();
   }
   
   public int getWorldWidth() {
@@ -69,6 +69,10 @@ public class World extends Scene {
   
   public int getWorldHeight() {
     return WORLD_HEIGHT;
+  }
+  
+  public HudManager getHudMan() {
+    return hudMan;
   }
   
   public PhysicsWorld getPhysWorld() {
@@ -113,31 +117,6 @@ public class World extends Scene {
   
   public void setPlayer(PlayerEntity pe) {
     player = pe;
-  }
-  
-  public void initHud() {
-    if (Config.DEBUG){
-      Line l = ObjectFactory.createLine(0, Config.CAMERA_HEIGHT/2, Config.CAMERA_WIDTH, Config.CAMERA_HEIGHT/2);
-      l.setColor(1.0f, 0.0f, 0.0f);
-      gameHud.attachChild(l);
-      l = ObjectFactory.createLine(0, Config.CAMERA_HEIGHT/4, Config.CAMERA_WIDTH, Config.CAMERA_HEIGHT/4);
-      l.setColor(1.0f, 0.0f, 0.0f);
-      gameHud.attachChild(l);
-      l = ObjectFactory.createLine(0, 3*Config.CAMERA_HEIGHT/4, Config.CAMERA_WIDTH, 3*Config.CAMERA_HEIGHT/4);
-      l.setColor(1.0f, 0.0f, 0.0f);
-      gameHud.attachChild(l);
-      l = ObjectFactory.createLine(Config.CAMERA_WIDTH/2, 0, Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT);
-      l.setColor(1.0f, 0.0f, 0.0f);
-      gameHud.attachChild(l);
-      l = ObjectFactory.createLine(Config.CAMERA_WIDTH/4, 0, Config.CAMERA_WIDTH/4, Config.CAMERA_HEIGHT);
-      l.setColor(1.0f, 0.0f, 0.0f);
-      gameHud.attachChild(l);
-      l = ObjectFactory.createLine(3*Config.CAMERA_WIDTH/4, 0, 3*Config.CAMERA_WIDTH/4, Config.CAMERA_HEIGHT);
-      l.setColor(1.0f, 0.0f, 0.0f);
-      gameHud.attachChild(l);
-    }
-    
-    mCamera.setHUD(gameHud);
   }
   
   public void initPhysWorld() {

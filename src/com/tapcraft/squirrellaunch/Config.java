@@ -38,8 +38,15 @@ public interface Config {
   public static float[] IMPULSE = { 40.0f, 0 };
   
   //BUTTONS
-  
+  public static String BUTTON = "hud_wood.png";
   public static String LAUNCH = "cannonlaunch.png";
+  
+  //BLOCKS
+  enum Block { WOOD };
+  public static String[] BlockHud = { Config.BUTTON };
+  
+  //HUD 
+  public static int HUD_PAD = 50;
   
   //DEBUG
   
@@ -52,7 +59,6 @@ public interface Config {
   public static String CANNON = "cannon.png";
   public static String CIRCLE = "sim_circle_anim.png";
   public static String ACORN = "acornshine.png";
-  public static String BUTTON = "hud_button.png";
   
   //CAMERA
   public static float CAM_VEL = 400;

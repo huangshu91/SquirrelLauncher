@@ -49,6 +49,7 @@ public class CameraManager implements IOnSceneTouchListener,
     }
 
     scrollOffset = new Vector2(0, 0);
+    
     mCamera.setZoomFactor(0.8f);
   }
 
@@ -104,7 +105,7 @@ public class CameraManager implements IOnSceneTouchListener,
       //if (Config.CAMERA_HEIGHT/newZoom > curWorld.getWorldHeight() || 
       //    Config.CAMERA_WIDTH/newZoom > curWorld.getWorldWidth()) return;
       
-      if (newZoom < Config.MAX_ZOOM && newZoom > Config.MIN_ZOOM) 
+      if (newZoom <= Config.MAX_ZOOM && newZoom >= Config.MIN_ZOOM) 
         mCamera.setZoomFactor(newZoom);
     }
 

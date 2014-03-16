@@ -107,8 +107,10 @@ public class Cannon extends EntityObj{
     
     but.setScale(0.3f);
     but.setUserData(this);
-    parent.registerTouchArea(but);
-    parent.attachChild(but);
+    //parent.registerTouchArea(but);
+    //parent.attachChild(but); 
+    parent.getHudMan().getHud().attachChild(but);
+    parent.getHudMan().getHud().registerTouchArea(but);
     
     active = true;
     simulate();
@@ -173,8 +175,8 @@ public class Cannon extends EntityObj{
     player.launch(newv);
     
     active = false;
-    parent.detachChild(but);
-    parent.unregisterTouchArea(but);
+    parent.getHudMan().getHud().detachChild(but);
+    parent.getHudMan().getHud().unregisterTouchArea(but);
     parent.unregisterTouchArea(sprite);
     sprite.detachChild(squirrel);
     //parent.detachChild(traj);

@@ -4,7 +4,6 @@ import java.util.HashMap;
 
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
-import org.andengine.opengl.texture.TextureManager;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -34,7 +33,7 @@ public class ResourceManager {
     GameEngine parent = GameEngine.getSharedInstance();
     BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(Config.GFX_PATH);
     
-  //load splash screen
+    //load splash screen
     BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(Config.GFX_PATH);
     BuildableBitmapTextureAtlas buildableTextureAtlas = 
         new BuildableBitmapTextureAtlas(parent.getTextureManager(), 820, 500, TextureOptions.BILINEAR);
@@ -67,6 +66,7 @@ public class ResourceManager {
     buildableTextureAtlas.load();
     ResourceManager.addTexture(splash, Config.LAUNCH);
     
+    //load player sprite
     buildableTextureAtlas = new BuildableBitmapTextureAtlas(parent.getTextureManager(), 360, 360, TextureOptions.BILINEAR);
     splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
         parent, Config.PLAYER_SPRITE);
@@ -126,6 +126,21 @@ public class ResourceManager {
     buildableTextureAtlas.load();
     ResourceManager.addTexture(tiled, Config.ACORN);
     
+    //load button
+    buildableTextureAtlas = 
+        new BuildableBitmapTextureAtlas(parent.getTextureManager(), 120, 120, TextureOptions.BILINEAR);
+    splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
+        parent, Config.BUTTON);
+    
+    try {
+      buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
+      
+    } catch (TextureAtlasBuilderException e) {
+      e.printStackTrace();
+    }
+    
+    buildableTextureAtlas.load();
+    ResourceManager.addTexture(splash, Config.BUTTON);
     
     //load fonts
     Font loadfont = FontFactory.createFromAsset(parent.getFontManager(), parent.getTextureManager(), 
@@ -133,8 +148,5 @@ public class ResourceManager {
     loadfont.prepareLetters(Config.PREPARE_ALPHA.toCharArray());
     loadfont.load();
     ResourceManager.addFont(loadfont, Config.FON_GROBOLD);
-    
-    //pOnCreateResourcesCallback.onCreateResourcesFinished();
-    
   }
 }

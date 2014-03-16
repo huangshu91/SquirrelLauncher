@@ -5,6 +5,8 @@ import org.andengine.entity.scene.background.Background;
 import com.tapcraft.entity.Cannon;
 import com.tapcraft.entity.GoldenAcorn;
 import com.tapcraft.physics.WinContactListener;
+import com.tapcraft.squirrellaunch.Config;
+import com.tapcraft.squirrellaunch.HudManager;
 
 public class World1Level1 extends World{
   
@@ -21,6 +23,10 @@ public class World1Level1 extends World{
     mCamera.setBoundsEnabled(true);
     cameraMan.setWorld(this);
     
+    hudMan = new HudManager(this);
+    hudMan.initHud();
+    setupHud();
+    
     initPhysWorld();
     initBounds();
     
@@ -29,6 +35,10 @@ public class World1Level1 extends World{
     physWorld.setContactListener(new WinContactListener(this));
     
     cannonActive = true;
+  }
+  
+  private void setupHud() {
+    hudMan.attachButton(Config.Block.WOOD);
   }
 
 }
