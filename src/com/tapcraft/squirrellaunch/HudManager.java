@@ -5,8 +5,10 @@ import java.util.ArrayList;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.primitive.Line;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.input.touch.TouchEvent;
 
 import com.tapcraft.levels.World;
+import com.tapcraft.util.Logger;
 
 public class HudManager {
   
@@ -55,6 +57,25 @@ public class HudManager {
     
   }
   public void attachButton(Config.Block b) {
+    float x = Config.HUD_PAD*(1+buttons.size()) + (buttons.size()*Config.BUTTON_SIZE) + Config.BUTTON_SIZE/2;
+    float y = Config.CAMERA_HEIGHT - Config.HUD_PAD - Config.BUTTON_SIZE/2;
+    //Logger.d(""+Config.Block.map.get(b));
+    Sprite newblock = new Sprite(x, y, ResourceManager.textureHashMap.get(Config.Block.map.get(b)), 
+        GameEngine.getSharedInstance().getVertexBufferObjectManager()) {
+      @Override
+      public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, 
+          final float pTouchAreaLocalY) {
+        
+        return true;
+      }
+      
+    };
+    buttons.add(newblock);
+    newblock.setUserData(b);
+    gameHud.attachChild(newblock);
+  }
+  
+  public void detachButton(Config.Block b) {
     
   }
 }

@@ -27,6 +27,8 @@ public class World1Level1 extends World{
     hudMan.initHud();
     setupHud();
     
+    blockMan = new BlockManager(this);
+    
     initPhysWorld();
     initBounds();
     

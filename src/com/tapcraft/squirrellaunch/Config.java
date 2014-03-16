@@ -1,5 +1,7 @@
 package com.tapcraft.squirrellaunch;
 
+import java.util.EnumMap;
+
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -42,11 +44,23 @@ public interface Config {
   public static String LAUNCH = "cannonlaunch.png";
   
   //BLOCKS
-  enum Block { WOOD };
   public static String[] BlockHud = { Config.BUTTON };
+  public enum Block { 
+    WOOD;
+    
+    public static final EnumMap<Block, String> map= new EnumMap<Block, String>(Block.class);
+    static {
+      int i = 0;
+      for(Block b : Block.values()) {
+        map.put(b, BlockHud[i]);
+        i++;
+      }
+    }
+  };
   
   //HUD 
-  public static int HUD_PAD = 50;
+  public static int HUD_PAD = 30;
+  public static int BUTTON_SIZE = 110;
   
   //DEBUG
   

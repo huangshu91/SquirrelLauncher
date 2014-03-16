@@ -3,7 +3,6 @@ package com.tapcraft.levels;
 import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.Entity;
-import org.andengine.entity.primitive.Line;
 import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.scene.Scene;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
@@ -15,6 +14,7 @@ import android.hardware.SensorManager;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.tapcraft.entity.BlockManager;
 import com.tapcraft.entity.Cannon;
 import com.tapcraft.entity.GoldenAcorn;
 import com.tapcraft.entity.PlayerEntity;
@@ -32,6 +32,7 @@ public class World extends Scene {
   protected Entity bounds;
   protected Entity debug;
   
+  protected BlockManager blockMan;
   protected HudManager hudMan;
   protected HUD gameHud;
   protected CameraManager cameraMan;
@@ -57,10 +58,6 @@ public class World extends Scene {
     bounds = new Entity();
 
     setTouchAreaBindingOnActionDownEnabled(true);
-    
-    //gameHud = new HUD();
-    //mCamera.setHUD(gameHud);
-    
   }
   
   public int getWorldWidth() {
