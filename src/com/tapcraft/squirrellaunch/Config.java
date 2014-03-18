@@ -40,11 +40,16 @@ public interface Config {
   public static float[] IMPULSE = { 40.0f, 0 };
   
   //BUTTONS
-  public static String BUTTON = "hud_wood.png";
+  public static String BUTTON_WOOD = "hud_wood.png";
   public static String LAUNCH = "cannonlaunch.png";
   
   //BLOCKS
-  public static String[] BlockHud = { Config.BUTTON };
+  public static String BLOCK_WOOD = "blockwood.png";
+  public static final FixtureDef WOOD_FIXDEF = 
+      PhysicsFactory.createFixtureDef(0, 0.1f, 0f);
+  
+  public static int NUMBLOCK = 9;
+  public static String[] BlockHud = { Config.BUTTON_WOOD };
   public enum Block { 
     WOOD;
     
@@ -56,7 +61,7 @@ public interface Config {
         i++;
       }
     }
-  };
+  }
   
   //HUD 
   public static int HUD_PAD = 30;

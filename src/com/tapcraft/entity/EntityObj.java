@@ -7,6 +7,7 @@ import com.tapcraft.levels.World;
 public class EntityObj {
   protected World parent;
   protected PhysicsWorld physWorld;
+  protected PhysicsWorld simWorld;
   
   boolean active;
   float x, y;
@@ -17,5 +18,6 @@ public class EntityObj {
     active = true;
     parent = par;
     physWorld = parent.getPhysWorld();
+    simWorld = parent.getSimWorld();
   }
 }

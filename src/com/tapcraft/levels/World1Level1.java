@@ -2,6 +2,7 @@ package com.tapcraft.levels;
 
 import org.andengine.entity.scene.background.Background;
 
+import com.tapcraft.entity.BlockManager;
 import com.tapcraft.entity.Cannon;
 import com.tapcraft.entity.GoldenAcorn;
 import com.tapcraft.physics.WinContactListener;
@@ -23,11 +24,12 @@ public class World1Level1 extends World{
     mCamera.setBoundsEnabled(true);
     cameraMan.setWorld(this);
     
+    blockMan = new BlockManager(this);
+    
     hudMan = new HudManager(this);
     hudMan.initHud();
     setupHud();
     
-    blockMan = new BlockManager(this);
     
     initPhysWorld();
     initBounds();
@@ -40,7 +42,7 @@ public class World1Level1 extends World{
   }
   
   private void setupHud() {
-    hudMan.attachButton(Config.Block.WOOD);
+    hudMan.attachButton(Config.Block.WOOD, Config.NUMBLOCK);
   }
 
 }

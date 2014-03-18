@@ -43,6 +43,7 @@ public class World extends Scene {
   protected GoldenAcorn acorn;
 
   protected boolean cannonActive;
+  public boolean touchLocked;
   
   protected int WORLD_WIDTH;
   protected int WORLD_HEIGHT;
@@ -54,6 +55,7 @@ public class World extends Scene {
     mCamera = cameraMan.getCamera();
     WORLD_WIDTH = w;
     WORLD_HEIGHT = h;
+    touchLocked = false;
 
     bounds = new Entity();
 
@@ -66,6 +68,10 @@ public class World extends Scene {
   
   public int getWorldHeight() {
     return WORLD_HEIGHT;
+  }
+  
+  public BlockManager getBlockMan() {
+    return blockMan;
   }
   
   public HudManager getHudMan() {
@@ -116,6 +122,10 @@ public class World extends Scene {
     player = pe;
   }
   
+  public void simulateTraj() {
+    if (cannon != null) cannon.simulate();
+  }
+  
   public void initPhysWorld() {
     physWorld = new FixedStepPhysicsWorld(Config.FPS, new Vector2(0, -SensorManager.GRAVITY_EARTH), false);
     simWorld = new FixedStepPhysicsWorld(Config.FPS, new Vector2(0, -SensorManager.GRAVITY_EARTH), false);
@@ -131,6 +141,14 @@ public class World extends Scene {
   public void camEnd() {
     if (cannon != null)
       cannon.locked = false;
+  }
+  
+  public void disableScroll() {
+    this.setOnSceneTouchListener(null);
+  }
+  
+  public void enableScroll() {
+    this.setOnSceneTouchListener(cameraMan);
   }
   
   public void beatWorld() {

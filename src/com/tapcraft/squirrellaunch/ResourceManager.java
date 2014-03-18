@@ -39,14 +39,11 @@ public class ResourceManager {
         new BuildableBitmapTextureAtlas(parent.getTextureManager(), 820, 500, TextureOptions.BILINEAR);
     ITextureRegion splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
         parent, Config.TEX_SPLASH);
-    
     try {
       buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
-      
     } catch (TextureAtlasBuilderException e) {
       e.printStackTrace();
     }
-    
     buildableTextureAtlas.load();
     ResourceManager.addTexture(splash, Config.TEX_SPLASH);
     
@@ -55,14 +52,11 @@ public class ResourceManager {
         new BuildableBitmapTextureAtlas(parent.getTextureManager(), 280, 280, TextureOptions.BILINEAR);
     splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
         parent, Config.LAUNCH);
-    
     try {
       buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
-      
     } catch (TextureAtlasBuilderException e) {
       e.printStackTrace();
     }
-    
     buildableTextureAtlas.load();
     ResourceManager.addTexture(splash, Config.LAUNCH);
     
@@ -70,29 +64,36 @@ public class ResourceManager {
     buildableTextureAtlas = new BuildableBitmapTextureAtlas(parent.getTextureManager(), 360, 360, TextureOptions.BILINEAR);
     splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
         parent, Config.PLAYER_SPRITE);
-    
     try {
       buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
-      
     } catch (TextureAtlasBuilderException e) {
       e.printStackTrace();
     }
-    
     buildableTextureAtlas.load();
     ResourceManager.addTexture(splash, Config.PLAYER_SPRITE);
     
-  //load simulation circle animated sprite
+    //load wood block
+    buildableTextureAtlas = new BuildableBitmapTextureAtlas(parent.getTextureManager(), 280, 280, TextureOptions.BILINEAR);
+    splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
+        parent, Config.BLOCK_WOOD);
+    try {
+      buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
+    } catch (TextureAtlasBuilderException e) {
+      e.printStackTrace();
+    }
+    buildableTextureAtlas.load();
+    ResourceManager.addTexture(splash, Config.BLOCK_WOOD);
+    
+    //load simulation circle animated sprite
     buildableTextureAtlas = 
         new BuildableBitmapTextureAtlas(parent.getTextureManager(), 400, 400, TextureOptions.BILINEAR);
     TiledTextureRegion tiled = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(buildableTextureAtlas, 
         parent, Config.CIRCLE, 2, 2);
-    
     try {
       buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
     } catch (TextureAtlasBuilderException e) {
       e.printStackTrace();
     }
-    
     buildableTextureAtlas.load();
     ResourceManager.addTexture(tiled, Config.CIRCLE);
     
@@ -101,13 +102,11 @@ public class ResourceManager {
         new BuildableBitmapTextureAtlas(parent.getTextureManager(), 380, 314, TextureOptions.BILINEAR);
     tiled = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(buildableTextureAtlas, 
         parent, Config.CANNON, 1, 2);
-    
     try {
       buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
     } catch (TextureAtlasBuilderException e) {
       e.printStackTrace();
     }
-    
     buildableTextureAtlas.load();
     ResourceManager.addTexture(tiled, Config.CANNON);
     
@@ -116,31 +115,26 @@ public class ResourceManager {
         new BuildableBitmapTextureAtlas(parent.getTextureManager(), 180, 240, TextureOptions.BILINEAR);
     tiled = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(buildableTextureAtlas, 
         parent, Config.ACORN, 2, 2);
-    
     try {
       buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 0, 0));
     } catch (TextureAtlasBuilderException e) {
       e.printStackTrace();
     }
-    
     buildableTextureAtlas.load();
     ResourceManager.addTexture(tiled, Config.ACORN);
     
-    //load button
+    //load button wood
     buildableTextureAtlas = 
         new BuildableBitmapTextureAtlas(parent.getTextureManager(), 120, 120, TextureOptions.BILINEAR);
     splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
-        parent, Config.BUTTON);
-    
+        parent, Config.BUTTON_WOOD);
     try {
       buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
-      
     } catch (TextureAtlasBuilderException e) {
       e.printStackTrace();
     }
-    
     buildableTextureAtlas.load();
-    ResourceManager.addTexture(splash, Config.BUTTON);
+    ResourceManager.addTexture(splash, Config.BUTTON_WOOD);
     
     //load fonts
     Font loadfont = FontFactory.createFromAsset(parent.getFontManager(), parent.getTextureManager(), 

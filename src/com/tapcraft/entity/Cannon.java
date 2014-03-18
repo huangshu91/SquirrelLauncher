@@ -107,8 +107,6 @@ public class Cannon extends EntityObj{
     
     but.setScale(0.3f);
     but.setUserData(this);
-    //parent.registerTouchArea(but);
-    //parent.attachChild(but); 
     parent.getHudMan().getHud().attachChild(but);
     parent.getHudMan().getHud().registerTouchArea(but);
     
