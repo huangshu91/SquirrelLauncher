@@ -1,5 +1,6 @@
 package com.tapcraft.entity;
 
+import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
@@ -18,6 +19,10 @@ public class PlayerEntity extends EntityObj{
   private Sprite sprite;
   
   public Body physBody;
+  
+  PhysicsConnector pcon;
+  
+  public IUpdateHandler checkReset;
   
   public PlayerEntity(World w, float x, float y) {
     super(w, x, y);
@@ -42,17 +47,45 @@ public class PlayerEntity extends EntityObj{
     
     physBody = PhysicsFactory.createCircleBody(physWorld, sprite, 
         BodyType.DynamicBody, Config.FIXTURE_DEF);
-    physWorld.registerPhysicsConnector(new PhysicsConnector(sprite, physBody, true, true));
-    sprite.setUserData(Config.PLAYER_ID);
+    pcon = new PhysicsConnector(sprite, physBody, true, true);
+    physWorld.registerPhysicsConnector(pcon);
+    physBody.setUserData(Config.PLAYER_ID);
     
     parent.registerTouchArea(sprite);
     parent.attachChild(sprite);
     
+    /*
+    checkReset = new IUpdateHandler() {
+
+      @Override
+      public void onUpdate(float pSecondsElapsed) {
+        // TODO Auto-generated method stub
+        
+      }
+
+      @Override
+      public void reset() {
+        // TODO Auto-generated method stub
+        
+      }
+      
+    };
+    */
   }
   
   public void launch(Vector2 impulse) {
     physBody.applyLinearImpulse(impulse, physBody.getWorldCenter());
     parent.getCamera().setChaseEntity(sprite);
+    
+    //parent.registerUpdateHandler(checkReset);
+  }
+  
+  public void detachSelf() {
+    parent.unregisterTouchArea(sprite);
+    parent.detachChild(sprite);
+    physWorld.unregisterPhysicsConnector(pcon);
+    physBody.setActive(false);
+    physWorld.destroyBody(physBody);
   }
   
 }

@@ -1,10 +1,8 @@
 package com.tapcraft.entity;
 
 import org.andengine.entity.Entity;
-import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
@@ -12,11 +10,8 @@ import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.util.math.MathUtils;
 
-import android.hardware.SensorManager;
-
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.tapcraft.levels.World;
 import com.tapcraft.squirrellaunch.Config;
@@ -157,6 +152,17 @@ public class Cannon extends EntityObj{
     parent.attachChild(traj);
   }
   
+  public void reactivate() {
+    active = true;
+    
+    parent.getHudMan().getHud().attachChild(but);
+    parent.getHudMan().getHud().registerTouchArea(but);
+    parent.registerTouchArea(sprite);
+    sprite.attachChild(squirrel);
+    parent.getCamera().setChaseEntity(null);
+    parent.getCamera().setCenter(sprite.getX(), sprite.getY());
+  }
+  
   public void launch() {
     if (!active) return;
     
@@ -177,7 +183,6 @@ public class Cannon extends EntityObj{
     parent.getHudMan().getHud().unregisterTouchArea(but);
     parent.unregisterTouchArea(sprite);
     sprite.detachChild(squirrel);
-    //parent.detachChild(traj);
   }
   
 }

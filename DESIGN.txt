@@ -1,0 +1,3 @@
+Reset Condition:
+	1) reset after hitting the ground and x seconds have passed.
+	2) movement (velocity) is below some threshold.

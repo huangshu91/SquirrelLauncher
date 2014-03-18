@@ -12,6 +12,7 @@ import org.andengine.extension.physics.box2d.PhysicsWorld;
 import android.hardware.SensorManager;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.tapcraft.entity.BlockManager;
@@ -101,12 +102,14 @@ public class World extends Scene {
     Rectangle rig = ObjectFactory.createRect(WORLD_WIDTH+1, WORLD_HEIGHT/2, 2, WORLD_HEIGHT);
     
     FixtureDef wallDef = PhysicsFactory.createFixtureDef(0, 0.5f, 0.5f);
+    FixtureDef groundDef = PhysicsFactory.createFixtureDef(0, 0.5f, 1.0f);
     PhysicsFactory.createBoxBody(physWorld, top, BodyType.StaticBody, wallDef);
-    PhysicsFactory.createBoxBody(physWorld, bot, BodyType.StaticBody, wallDef);
+    Body ground = PhysicsFactory.createBoxBody(physWorld, bot, BodyType.StaticBody, groundDef);
+    ground.setUserData(Config.RESET_ID);
     PhysicsFactory.createBoxBody(physWorld, rig, BodyType.StaticBody, wallDef);
     PhysicsFactory.createBoxBody(physWorld, lef, BodyType.StaticBody, wallDef);
     PhysicsFactory.createBoxBody(simWorld, top, BodyType.StaticBody, wallDef);
-    PhysicsFactory.createBoxBody(simWorld, bot, BodyType.StaticBody, wallDef);
+    PhysicsFactory.createBoxBody(simWorld, bot, BodyType.StaticBody, groundDef);
     PhysicsFactory.createBoxBody(simWorld, rig, BodyType.StaticBody, wallDef);
     PhysicsFactory.createBoxBody(simWorld, lef, BodyType.StaticBody, wallDef);
     
@@ -120,6 +123,13 @@ public class World extends Scene {
   
   public void setPlayer(PlayerEntity pe) {
     player = pe;
+  }
+  
+  public void resetCond() {
+    if (cannon != null) {
+      cannon.reactivate();
+      player.detachSelf();
+    }
   }
   
   public void simulateTraj() {

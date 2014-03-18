@@ -88,4 +88,5 @@ public interface Config {
   //PHYSICS
   public static String PLAYER_ID = "player";
   public static String ACORN_ID = "acorn";
+  public static String RESET_ID = "ground";
 }

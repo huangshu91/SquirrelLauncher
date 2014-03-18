@@ -55,9 +55,6 @@ public class HudManager {
     return gameHud;
   }
   
-  public void attachButton(Sprite s) {
-    
-  }
   public void attachButton(final Config.Block b, int numBlock) {
     float x = Config.HUD_PAD*(1+buttons.size()) + (buttons.size()*Config.BUTTON_SIZE) + Config.BUTTON_SIZE/2;
     float y = Config.CAMERA_HEIGHT - Config.HUD_PAD - Config.BUTTON_SIZE/2;
