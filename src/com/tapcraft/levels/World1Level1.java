@@ -44,6 +44,7 @@ public class World1Level1 extends World{
   private void setupHud() {
     hudMan.attachButton(Config.Block.WOOD, Config.NUMBLOCK);
     hudMan.attachUndo();
+    hudMan.attachClear();
   }
 
 }

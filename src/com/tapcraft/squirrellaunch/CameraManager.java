@@ -83,7 +83,7 @@ public class CameraManager implements IOnSceneTouchListener,
   public void onScrollFinished(ScrollDetector pScollDetector, int pPointerID,
       float pDistanceX, float pDistanceY) {
     final float zoomFactor = mCamera.getZoomFactor();
-    mCamera.offsetCenter((-scrollOffset.x/2) / zoomFactor, (scrollOffset.y/2) / zoomFactor);
+    mCamera.offsetCenter((-scrollOffset.x) / zoomFactor, (scrollOffset.y) / zoomFactor);
     
     if (curWorld != null) curWorld.camEnd();
   }

@@ -4,13 +4,16 @@ import org.andengine.entity.sprite.Sprite;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.tapcraft.levels.World;
+import com.tapcraft.squirrellaunch.Config;
 
-public class BlockObj extends EntityObj {
+public abstract class BlockObj extends EntityObj {
   protected Sprite sprite;
   protected Sprite simSprite;
   
   protected Body physBody;
   protected Body simBody;
+  
+  protected Config.Block blockType;
   
   public BlockObj(World par, float xc, float yc) {
     super(par, xc, yc);
@@ -23,9 +26,7 @@ public class BlockObj extends EntityObj {
     sprite.setPosition(x, y);
   }
   
-  public void setActive() {
-    
-  }
+  public abstract void setActive();
 
   public void removeBlock() {
     parent.unregisterTouchArea(sprite);
@@ -38,5 +39,9 @@ public class BlockObj extends EntityObj {
       simWorld.destroyBody(simBody);
       parent.simulateTraj();
     }
+  }
+  
+  public Config.Block getType() {
+    return blockType;
   }
 }

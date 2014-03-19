@@ -148,6 +148,14 @@ public class World extends Scene {
     registerUpdateHandler(physWorld);
   }
   
+  public void clearWorld() {
+    //reset number of squirrels left
+    
+    //reset blocks until all gone
+    while(blockMan.undoBlock()) { }
+    mCamera.setCenter(cannon.getX(), cannon.getY());
+  }
+  
   public void camStart() {
     if (cannon != null)
       cannon.locked = true;

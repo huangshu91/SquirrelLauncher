@@ -66,7 +66,7 @@ public interface Config {
   }
   
   //HUD 
-  public static int HUD_PAD = 30;
+  public static int HUD_PAD = 20;
   public static int BUTTON_SIZE = 110;
   public static int BUTTON_S_SIZE = 80;
   

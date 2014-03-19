@@ -14,6 +14,7 @@ public class WoodBlock extends BlockObj {
 
   public WoodBlock(World par, float xc, float yc) {
     super(par, xc, yc);
+    blockType = Config.Block.WOOD;
 
     sprite = new Sprite(xc, yc,
         ResourceManager.textureHashMap.get(Config.BLOCK_WOOD), GameEngine

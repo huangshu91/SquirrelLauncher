@@ -115,4 +115,26 @@ public class HudManager {
     gameHud.attachChild(but_undo);
     gameHud.registerTouchArea(but_undo);
   }
+  
+  public void attachClear() {
+    float x = Config.CAMERA_WIDTH - Config.BUTTON_S_SIZE - 2*Config.HUD_PAD - Config.BUTTON_S_SIZE/2;
+    float y = Config.HUD_PAD + Config.BUTTON_S_SIZE/2;
+    
+    Sprite but_clear = new Sprite(x, y, ResourceManager.textureHashMap.get(Config.BUTTON_CLEAR),
+        GameEngine.getSharedInstance().getVertexBufferObjectManager()) {
+      @Override
+      public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, 
+          final float pTouchAreaLocalY) {
+        if (!active) return false;
+        switch(pSceneTouchEvent.getAction()) {
+        case TouchEvent.ACTION_UP:
+          parent.clearWorld();
+          break;
+        }
+        return true;
+      }
+    };
+    
+    gameHud.attachChild(but_clear);
+  }
 }

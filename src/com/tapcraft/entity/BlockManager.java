@@ -19,6 +19,7 @@ public class BlockManager {
   private EnumMap<Config.Block, Integer> blocknum;
   
   private Stack<BlockObj> blockhist;
+  private int histNum;
   
   public BlockManager(World p) {
     parent = p;
@@ -39,20 +40,25 @@ public class BlockManager {
     
     if (b == Config.Block.WOOD){
       ret = new WoodBlock(parent, x, y);
-      blockhist.add(ret);
+      blockhist.push(ret);
     }
     
     return ret;
   }
   
-  public void undoBlock() {
-    if (blockhist.size() == 0) return;
+  public boolean undoBlock() {
+    if (blockhist.size() == 0) return false;
     
     BlockObj last = blockhist.pop();
     last.removeBlock();
+    int numleft = blocknum.get(last.getType());
+    numleft++;
+    blocknum.put(last.getType(), numleft);
+    return true;
   }
   
   public void addBlockCount(Config.Block b, int n) {
     blocknum.put(b, n);
   }
+  
 }
