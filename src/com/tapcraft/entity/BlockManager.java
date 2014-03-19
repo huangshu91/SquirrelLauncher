@@ -1,6 +1,7 @@
 package com.tapcraft.entity;
 
 import java.util.EnumMap;
+import java.util.Stack;
 
 import org.andengine.extension.physics.box2d.PhysicsWorld;
 
@@ -17,12 +18,15 @@ public class BlockManager {
   
   private EnumMap<Config.Block, Integer> blocknum;
   
+  private Stack<BlockObj> blockhist;
+  
   public BlockManager(World p) {
     parent = p;
     cameraMan = p.getCameraMan();
     physWorld = p.getPhysWorld();
     simWorld = p.getSimWorld();
     blocknum = new EnumMap<Config.Block, Integer> (Config.Block.class);
+    blockhist = new Stack<BlockObj> ();
   }
   
   public BlockObj createBlock(Config.Block b, float x, float y) {
@@ -35,9 +39,17 @@ public class BlockManager {
     
     if (b == Config.Block.WOOD){
       ret = new WoodBlock(parent, x, y);
+      blockhist.add(ret);
     }
     
     return ret;
+  }
+  
+  public void undoBlock() {
+    if (blockhist.size() == 0) return;
+    
+    BlockObj last = blockhist.pop();
+    last.removeBlock();
   }
   
   public void addBlockCount(Config.Block b, int n) {

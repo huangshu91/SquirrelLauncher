@@ -1,3 +1,10 @@
 Reset Condition:
 	1) reset after hitting the ground and x seconds have passed.
 	2) movement (velocity) is below some threshold.
+	3) when player is touched, this way you can't accidently trap him.
+
+Blocks:
+	Add number to blocks placed in the world to indicate undo ordering
+
+Hud:
+	Number in corner of each block button to indicate number of blocks left

@@ -9,7 +9,6 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.tapcraft.levels.World;
 import com.tapcraft.squirrellaunch.Config;
-import com.tapcraft.util.Logger;
 
 public class WinContactListener implements ContactListener {
   private World parent;

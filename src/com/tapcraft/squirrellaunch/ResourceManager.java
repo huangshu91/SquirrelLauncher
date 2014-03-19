@@ -136,6 +136,32 @@ public class ResourceManager {
     buildableTextureAtlas.load();
     ResourceManager.addTexture(splash, Config.BUTTON_WOOD);
     
+    //load button reset
+    buildableTextureAtlas = 
+        new BuildableBitmapTextureAtlas(parent.getTextureManager(), 90, 90, TextureOptions.BILINEAR);
+    splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
+        parent, Config.BUTTON_UNDO);
+    try {
+      buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
+    } catch (TextureAtlasBuilderException e) {
+      e.printStackTrace();
+    }
+    buildableTextureAtlas.load();
+    ResourceManager.addTexture(splash, Config.BUTTON_UNDO);
+    
+    //load button clear
+    buildableTextureAtlas = 
+        new BuildableBitmapTextureAtlas(parent.getTextureManager(), 90, 90, TextureOptions.BILINEAR);
+    splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
+        parent, Config.BUTTON_CLEAR);
+    try {
+      buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
+    } catch (TextureAtlasBuilderException e) {
+      e.printStackTrace();
+    }
+    buildableTextureAtlas.load();
+    ResourceManager.addTexture(splash, Config.BUTTON_CLEAR);
+    
     //load fonts
     Font loadfont = FontFactory.createFromAsset(parent.getFontManager(), parent.getTextureManager(), 
         256, 256, parent.getAssets(), Config.FON_GROBOLD, 24f, true, Color.WHITE_ABGR_PACKED_INT);

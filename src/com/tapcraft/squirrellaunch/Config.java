@@ -42,11 +42,13 @@ public interface Config {
   //BUTTONS
   public static String BUTTON_WOOD = "hud_wood.png";
   public static String LAUNCH = "cannonlaunch.png";
+  public static String BUTTON_UNDO = "button_undo.png";
+  public static String BUTTON_CLEAR = "button_clear.png";
   
   //BLOCKS
   public static String BLOCK_WOOD = "blockwood.png";
   public static final FixtureDef WOOD_FIXDEF = 
-      PhysicsFactory.createFixtureDef(0, 0.1f, 0f);
+      PhysicsFactory.createFixtureDef(0, 0.3f, 0f);
   
   public static int NUMBLOCK = 9;
   public static String[] BlockHud = { Config.BUTTON_WOOD };
@@ -66,6 +68,7 @@ public interface Config {
   //HUD 
   public static int HUD_PAD = 30;
   public static int BUTTON_SIZE = 110;
+  public static int BUTTON_S_SIZE = 80;
   
   //DEBUG
   

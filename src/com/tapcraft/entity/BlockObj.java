@@ -27,4 +27,16 @@ public class BlockObj extends EntityObj {
     
   }
 
+  public void removeBlock() {
+    parent.unregisterTouchArea(sprite);
+    parent.detachChild(sprite);
+    
+    if (active) {
+      physBody.setActive(false);
+      simBody.setActive(false);
+      physWorld.destroyBody(physBody);
+      simWorld.destroyBody(simBody);
+      parent.simulateTraj();
+    }
+  }
 }

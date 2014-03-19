@@ -8,7 +8,6 @@ import org.andengine.entity.primitive.Line;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 
-import com.tapcraft.entity.BlockObj;
 import com.tapcraft.levels.World;
 import com.tapcraft.util.Logger;
 
@@ -64,7 +63,6 @@ public class HudManager {
     
     Sprite newblock = new Sprite(x, y, ResourceManager.textureHashMap.get(Config.Block.map.get(b)), 
         GameEngine.getSharedInstance().getVertexBufferObjectManager()) {
-      BlockObj curBlock;
       @Override
       public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, 
           final float pTouchAreaLocalY) {
@@ -72,8 +70,7 @@ public class HudManager {
         switch(pSceneTouchEvent.getAction()) {
         case TouchEvent.ACTION_DOWN:
           SmoothCamera cam = cameraMan.getCamera();
-          curBlock = parent.getBlockMan().createBlock(b, 
-              cam.getCenterX(), cam.getCenterY());
+          parent.getBlockMan().createBlock(b, cam.getCenterX(), cam.getCenterY());
           break;
         }
         
@@ -94,5 +91,28 @@ public class HudManager {
   
   public void toggleActive() {
     active = !active;
+  }
+  
+  public void attachUndo() {
+    float x = Config.CAMERA_WIDTH - Config.HUD_PAD - Config.BUTTON_S_SIZE/2;
+    float y = Config.HUD_PAD + Config.BUTTON_S_SIZE/2;
+    
+    Sprite but_undo = new Sprite(x, y, ResourceManager.textureHashMap.get(Config.BUTTON_UNDO),
+        GameEngine.getSharedInstance().getVertexBufferObjectManager()) {
+      @Override
+      public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, 
+          final float pTouchAreaLocalY) {
+        if (!active) return false;
+        switch(pSceneTouchEvent.getAction()) {
+        case TouchEvent.ACTION_UP:
+          parent.getBlockMan().undoBlock();
+          break;
+        }
+        return true;
+      }
+    };
+    
+    gameHud.attachChild(but_undo);
+    gameHud.registerTouchArea(but_undo);
   }
 }
