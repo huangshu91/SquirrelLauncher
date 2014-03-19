@@ -129,7 +129,12 @@ public class World extends Scene {
     if (cannon != null) {
       cannon.reactivate();
       player.detachSelf();
+      toggleHud();
     }
+  }
+  
+  public void toggleHud() {
+    if (hudMan != null) hudMan.toggleActive();
   }
   
   public void simulateTraj() {

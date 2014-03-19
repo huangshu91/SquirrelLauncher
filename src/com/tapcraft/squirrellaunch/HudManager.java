@@ -19,8 +19,11 @@ public class HudManager {
   private World         parent;
   private ArrayList<Sprite> buttons;
   
+  private boolean active;
+  
   public HudManager(World w) {
     parent = w;
+    active = true;
     gameHud = new HUD();
     cameraMan = parent.getCameraMan();
     buttons = new ArrayList<Sprite> ();
@@ -65,7 +68,7 @@ public class HudManager {
       @Override
       public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, 
           final float pTouchAreaLocalY) {
-        
+        if (!active) return false;
         switch(pSceneTouchEvent.getAction()) {
         case TouchEvent.ACTION_DOWN:
           SmoothCamera cam = cameraMan.getCamera();
@@ -87,5 +90,9 @@ public class HudManager {
   
   public void detachButton(Config.Block b) {
     
+  }
+  
+  public void toggleActive() {
+    active = !active;
   }
 }

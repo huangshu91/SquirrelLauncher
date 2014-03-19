@@ -61,9 +61,8 @@ public class WinContactListener implements ContactListener {
   public boolean checkWin(Contact contact) {
     String objA = (String) contact.getFixtureA().getBody().getUserData();
     String objB = (String) contact.getFixtureB().getBody().getUserData();
-    if (objA == null || objB == null) {
-      return false;
-    }
+    
+    if (objA == null || objB == null) return false;
     
     if (objA.equals(Config.ACORN_ID)) {
       if (objB.equals(Config.PLAYER_ID)) return true;
@@ -83,9 +82,7 @@ public class WinContactListener implements ContactListener {
     String objA = (String) contact.getFixtureA().getBody().getUserData();
     String objB = (String) contact.getFixtureB().getBody().getUserData();
     
-    if (objA == null || objB == null) {
-      return false;
-    }
+    if (objA == null || objB == null) return false;
     
     if (objA.equals(Config.RESET_ID)) {
       if (objB.equals(Config.PLAYER_ID)) return true;

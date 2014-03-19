@@ -76,6 +76,7 @@ public class PlayerEntity extends EntityObj{
   public void launch(Vector2 impulse) {
     physBody.applyLinearImpulse(impulse, physBody.getWorldCenter());
     parent.getCamera().setChaseEntity(sprite);
+    parent.toggleHud();
     
     //parent.registerUpdateHandler(checkReset);
   }
