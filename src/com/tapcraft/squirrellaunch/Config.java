@@ -24,6 +24,8 @@ public interface Config {
   public static final int FPS = 60;
   
   public static final String TAG = "TapCraft";
+
+  public static String GFX_PATH = "gfx/";
   
   public static final FixtureDef FIXTURE_DEF = 
       PhysicsFactory.createFixtureDef(1, 0.5f, 0.5f);
@@ -41,19 +43,30 @@ public interface Config {
   
   //BUTTONS
   public static String BUTTON_WOOD = "hud_wood.png";
-  public static String LAUNCH = "cannonlaunch.png";
+  public static String BUTTON_BOUNCE = "hud_bounce.png";
+  public static String BUTTON_ACCEL = "hud_accel.png";
+  public static String BUTTON_LAUNCH = "hud_launch.png";
   public static String BUTTON_UNDO = "button_undo.png";
   public static String BUTTON_CLEAR = "button_clear.png";
   
   //BLOCKS
   public static String BLOCK_WOOD = "blockwood.png";
+  public static String BLOCK_BOUNCE = "blockbounce.png";
+  public static String BLOCK_ACCEL = "blockaccel.png";
+  
+  public static String BLOCK_HALO = "blockhalo.png";
+  
   public static final FixtureDef WOOD_FIXDEF = 
       PhysicsFactory.createFixtureDef(0, 0.3f, 0f);
+  public static final FixtureDef BOUNCE_FIXDEF = 
+      PhysicsFactory.createFixtureDef(0, 1.0f, 0f);
+  public static float ACCEL_RATE = 1.4f;
   
   public static int NUMBLOCK = 9;
-  public static String[] BlockHud = { Config.BUTTON_WOOD };
+  public static String[] BlockHud = { Config.BUTTON_WOOD, Config.BUTTON_BOUNCE,
+    Config.BUTTON_ACCEL };
   public enum Block { 
-    WOOD;
+    WOOD, BOUNCE, ACCEL;
     
     public static final EnumMap<Block, String> map= new EnumMap<Block, String>(Block.class);
     static {
@@ -66,24 +79,25 @@ public interface Config {
   }
   
   //HUD 
-  public static int HUD_PAD = 20;
-  public static int BUTTON_SIZE = 110;
-  public static int BUTTON_S_SIZE = 80;
+  public static int HUD_PAD = 10;
+  public static int BUTTON_SIZE = 90;
+  public static int BUTTON_S_SIZE = 60;
   
   //DEBUG
-  
   public static boolean DEBUG = true;
   
-  //SPRITE PATHS
-  public static String GFX_PATH = "gfx/";
+  //SPRITE
   public static String TEX_SPLASH = "splashscreen.png";
   public static String PLAYER_SPRITE = "squirrelplayer.png";
   public static String CANNON = "cannon.png";
   public static String CIRCLE = "sim_circle_anim.png";
   public static String ACORN = "acornshine.png";
   
+  public static String ACORN_STATIC = "acorn_gold.png";
+  public static String ACORN_MOLD = "acorn_mold.png";
+  
   //CAMERA
-  public static float CAM_VEL = 400;
+  public static float CAM_VEL = 600;
   public static float CAM_ZOOM_VEL = 5;
   public static float MAX_ZOOM = 1.0f;
   public static float MIN_ZOOM = 0.5f;
@@ -92,4 +106,5 @@ public interface Config {
   public static String PLAYER_ID = "player";
   public static String ACORN_ID = "acorn";
   public static String RESET_ID = "ground";
+  public static String ACCEL_ID = "accel";
 }

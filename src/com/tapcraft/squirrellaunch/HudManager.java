@@ -9,7 +9,6 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 
 import com.tapcraft.levels.World;
-import com.tapcraft.util.Logger;
 
 public class HudManager {
   

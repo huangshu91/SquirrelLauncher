@@ -45,6 +45,7 @@ public class Cannon extends EntityObj{
         case TouchEvent.ACTION_DOWN:
           a.x = pSceneTouchEvent.getX();
           a.y = pSceneTouchEvent.getY();
+          active = false;
           ((Cannon)getUserData()).toggleCamera();
           break;
         case TouchEvent.ACTION_MOVE:
@@ -66,6 +67,7 @@ public class Cannon extends EntityObj{
           
           break;
         case TouchEvent.ACTION_UP:
+          active = true;
           ((Cannon)getUserData()).toggleCamera();
           break;
         }
@@ -89,7 +91,9 @@ public class Cannon extends EntityObj{
     parent.registerTouchArea(sprite);
     parent.attachChild(sprite);
     
-    but = new Sprite(80, 80, ResourceManager.textureHashMap.get(Config.LAUNCH), 
+    float xpos = Config.HUD_PAD + Config.BUTTON_SIZE/2;
+    float ypos = xpos;
+    but = new Sprite(xpos, ypos, ResourceManager.textureHashMap.get(Config.BUTTON_LAUNCH), 
         GameEngine.getSharedInstance().getVertexBufferObjectManager()) {
       @Override public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, 
           final float pTouchAreaLocalY) {
@@ -100,7 +104,6 @@ public class Cannon extends EntityObj{
       }
     };
     
-    but.setScale(0.3f);
     but.setUserData(this);
     parent.getHudMan().getHud().attachChild(but);
     parent.getHudMan().getHud().registerTouchArea(but);
@@ -133,6 +136,7 @@ public class Cannon extends EntityObj{
         GameEngine.getSharedInstance().getVertexBufferObjectManager());
     Body simBody = PhysicsFactory.createCircleBody(simWorld, temp, 
         BodyType.DynamicBody, Config.FIXTURE_DEF);
+    simBody.setUserData(Config.PLAYER_ID);
     
     PhysicsConnector pcon = new PhysicsConnector(temp, simBody, true, true);
     simWorld.registerPhysicsConnector(pcon);
@@ -179,8 +183,9 @@ public class Cannon extends EntityObj{
     player.launch(newv);
     
     active = false;
-    parent.getHudMan().getHud().detachChild(but);
+
     parent.getHudMan().getHud().unregisterTouchArea(but);
+    parent.getHudMan().getHud().detachChild(but);
     parent.unregisterTouchArea(sprite);
     sprite.detachChild(squirrel);
   }

@@ -24,6 +24,7 @@ import com.tapcraft.squirrellaunch.Config;
 import com.tapcraft.squirrellaunch.GameEngine;
 import com.tapcraft.squirrellaunch.HudManager;
 import com.tapcraft.squirrellaunch.ObjectFactory;
+import com.tapcraft.util.Logger;
 
 public class World extends Scene {
   protected GameEngine parent;
@@ -81,6 +82,10 @@ public class World extends Scene {
   
   public PhysicsWorld getPhysWorld() {
     return physWorld;
+  }
+  
+  public PlayerEntity getPlayer() {
+    return player;
   }
   
   public PhysicsWorld getSimWorld() {

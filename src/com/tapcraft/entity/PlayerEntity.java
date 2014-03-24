@@ -18,7 +18,7 @@ import com.tapcraft.squirrellaunch.ResourceManager;
 public class PlayerEntity extends EntityObj{
   private Sprite sprite;
   
-  public Body physBody;
+  private Body physBody;
   
   PhysicsConnector pcon;
   
@@ -87,6 +87,11 @@ public class PlayerEntity extends EntityObj{
     physWorld.unregisterPhysicsConnector(pcon);
     physBody.setActive(false);
     physWorld.destroyBody(physBody);
+    parent.setPlayer(null);
+  }
+  
+  public Body getBody() {
+    return physBody;
   }
   
 }

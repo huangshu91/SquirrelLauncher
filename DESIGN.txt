@@ -5,6 +5,7 @@ Reset Condition:
 
 Blocks:
 	Add number to blocks placed in the world to indicate undo ordering
+	Bounce and Wood so far have same logic but other blocks may not.  Additionally need a "contacted" method for sound, animation, etc.
 
 Hud:
 	Number in corner of each block button to indicate number of blocks left
@@ -15,3 +16,6 @@ Buttons:
 
 Position markers:
 	Allow players to place flags to remember positions.  
+
+Obstacles
+	Destructables?

@@ -3,12 +3,15 @@ package com.tapcraft.physics;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.tapcraft.levels.World;
 import com.tapcraft.squirrellaunch.Config;
+import com.tapcraft.util.Logger;
+import com.tapcraft.util.Physics;
 
 public class WinContactListener implements ContactListener {
   private World parent;
@@ -32,12 +35,19 @@ public class WinContactListener implements ContactListener {
   @Override
   public void beginContact(Contact contact) {
     if (contact.isTouching()) {
-      if (checkWin(contact)) {
+      if (Physics.checkContact(contact, Config.PLAYER_ID, Config.ACORN_ID)) {
         parent.beatWorld();
       }
-      else if (checkReset(contact)) {
+      else if (Physics.checkContact(contact, Config.PLAYER_ID, Config.RESET_ID)) {
+        if (hitGround) return;
         hitGround = true;
         parent.registerUpdateHandler(resetTimer);
+      }
+      else if (Physics.checkContact(contact, Config.PLAYER_ID, Config.ACCEL_ID)) {
+        //possibly reset right before resolve accel
+        if (parent.getPlayer() == null) return;
+        Body player = parent.getPlayer().getBody();
+        player.setLinearVelocity(player.getLinearVelocity().mul(Config.ACCEL_RATE));
       }
     }
   }

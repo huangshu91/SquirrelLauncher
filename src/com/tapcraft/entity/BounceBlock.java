@@ -10,14 +10,15 @@ import com.tapcraft.squirrellaunch.Config;
 import com.tapcraft.squirrellaunch.GameEngine;
 import com.tapcraft.squirrellaunch.ResourceManager;
 
-public class WoodBlock extends BlockObj {
+public class BounceBlock extends BlockObj {
 
-  public WoodBlock(World par, float xc, float yc) {
+  public BounceBlock(World par, float xc, float yc) {
     super(par, xc, yc);
-    blockType = Config.Block.WOOD;
+    // TODO Auto-generated constructor stub
+    blockType = Config.Block.BOUNCE;
 
     sprite = new Sprite(xc, yc,
-        ResourceManager.textureHashMap.get(Config.BLOCK_WOOD), GameEngine
+        ResourceManager.textureHashMap.get(Config.BLOCK_BOUNCE), GameEngine
             .getSharedInstance().getVertexBufferObjectManager()) {
       @Override
       public boolean onAreaTouched(final TouchEvent pSceneTouchEvent,
@@ -43,7 +44,7 @@ public class WoodBlock extends BlockObj {
     simSprite = new Sprite(sprite.getWidth()/2, sprite.getHeight()/2,
         ResourceManager.textureHashMap.get(Config.BLOCK_HALO), GameEngine
             .getSharedInstance().getVertexBufferObjectManager());
-
+    
     sprite.attachChild(simSprite);
     parent.attachChild(sprite);
     parent.registerTouchArea(sprite);
@@ -54,15 +55,16 @@ public class WoodBlock extends BlockObj {
     
     sprite.detachChild(simSprite);
     physBody = PhysicsFactory.createBoxBody(physWorld, sprite,
-        BodyType.StaticBody, Config.WOOD_FIXDEF);
-    simSprite = new Sprite(sprite.getX(), sprite.getY(), ResourceManager.textureHashMap.get(Config.BLOCK_WOOD), GameEngine
+        BodyType.StaticBody, Config.BOUNCE_FIXDEF);
+    simSprite = new Sprite(sprite.getX(), sprite.getY(), ResourceManager.textureHashMap.get(Config.BLOCK_BOUNCE), GameEngine
             .getSharedInstance().getVertexBufferObjectManager());
     simSprite.setScale(0.3f);
     simBody = PhysicsFactory.createBoxBody(simWorld, simSprite,
-        BodyType.StaticBody, Config.WOOD_FIXDEF);
+        BodyType.StaticBody, Config.BOUNCE_FIXDEF);
     
     parent.simulateTraj();
     parent.unregisterTouchArea(sprite);
   }
+
 
 }

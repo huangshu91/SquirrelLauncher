@@ -38,8 +38,14 @@ public class BlockManager {
     blocknum.put(b, numleft);
     BlockObj ret = null;
     
-    if (b == Config.Block.WOOD){
+    if (b == Config.Block.WOOD) {
       ret = new WoodBlock(parent, x, y);
+      blockhist.push(ret);
+    } else if (b == Config.Block.BOUNCE) {
+      ret = new BounceBlock(parent, x, y);
+      blockhist.push(ret);
+    } else if (b == Config.Block.ACCEL){
+      ret = new AccelBlock(parent, x, y);
       blockhist.push(ret);
     }
     

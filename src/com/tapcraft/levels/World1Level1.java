@@ -5,6 +5,7 @@ import org.andengine.entity.scene.background.Background;
 import com.tapcraft.entity.BlockManager;
 import com.tapcraft.entity.Cannon;
 import com.tapcraft.entity.GoldenAcorn;
+import com.tapcraft.physics.SimContactListener;
 import com.tapcraft.physics.WinContactListener;
 import com.tapcraft.squirrellaunch.Config;
 import com.tapcraft.squirrellaunch.HudManager;
@@ -37,12 +38,15 @@ public class World1Level1 extends World{
     cannon = new Cannon(this, 250,200);
     acorn = new GoldenAcorn(this, 1600, 300);
     physWorld.setContactListener(new WinContactListener(this));
+    simWorld.setContactListener(new SimContactListener(this));
     
     cannonActive = true;
   }
   
   private void setupHud() {
     hudMan.attachButton(Config.Block.WOOD, Config.NUMBLOCK);
+    hudMan.attachButton(Config.Block.BOUNCE, Config.NUMBLOCK);
+    hudMan.attachButton(Config.Block.ACCEL, Config.NUMBLOCK);
     hudMan.attachUndo();
     hudMan.attachClear();
   }
