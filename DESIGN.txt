@@ -6,6 +6,7 @@ Reset Condition:
 Blocks:
 	Add number to blocks placed in the world to indicate undo ordering
 	Bounce and Wood so far have same logic but other blocks may not.  Additionally need a "contacted" method for sound, animation, etc.
+	Accel adds too much of a randomness factor, maybe limit max velocity.
 
 Hud:
 	Number in corner of each block button to indicate number of blocks left
@@ -19,3 +20,6 @@ Position markers:
 
 Obstacles
 	Destructables?
+
+Mechanics
+	Some sort of scoring mechanism?  Airtime?  Num blocks used? 

@@ -52,19 +52,23 @@ public class BlockManager {
     return ret;
   }
   
-  public boolean undoBlock() {
-    if (blockhist.size() == 0) return false;
+  public BlockObj undoBlock() {
+    if (blockhist.size() == 0) return null;
     
     BlockObj last = blockhist.pop();
     last.removeBlock();
     int numleft = blocknum.get(last.getType());
     numleft++;
     blocknum.put(last.getType(), numleft);
-    return true;
+    return last;
   }
   
   public void addBlockCount(Config.Block b, int n) {
     blocknum.put(b, n);
+  }
+  
+  public int getBlockCount(Config.Block b) {
+    return blocknum.get(b);
   }
   
 }

@@ -3,6 +3,7 @@ package com.tapcraft.entity;
 import org.andengine.entity.Entity;
 import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.text.Text;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.PhysicsWorld;
@@ -25,13 +26,18 @@ public class Cannon extends EntityObj{
   private Sprite squirrel;
   
   private Sprite but;
+  private Text livetext;
   private Entity traj;
+  
+  private int lives;
   
   private boolean active;
   public boolean locked;
   
   public Cannon(World w, int x, int y) {
     super(w, x, y);
+    lives = Config.NUM_LIVES;
+    
     sprite = new AnimatedSprite(x, y, (ITiledTextureRegion) 
         ResourceManager.textureHashMap.get(Config.CANNON), GameEngine.getSharedInstance().getVertexBufferObjectManager()) {
       Vector2 a = new Vector2();
@@ -103,13 +109,24 @@ public class Cannon extends EntityObj{
         return true;
       }
     };
+    livetext = new Text(but.getWidth() - Config.HUD_PAD, Config.HUD_PAD, ResourceManager.fontHashMap.get(Config.FON_HUD), 
+        "x"+Config.NUM_LIVES, 3, GameEngine.getSharedInstance().getVertexBufferObjectManager());
     
+    but.attachChild(livetext);
     but.setUserData(this);
     parent.getHudMan().getHud().attachChild(but);
     parent.getHudMan().getHud().registerTouchArea(but);
     
     active = true;
     simulate();
+  }
+  
+  public void setLives(int n) {
+    lives = n;
+  }
+  
+  public int getLives() {
+    return lives;
   }
   
   public void toggleCamera() {
@@ -170,6 +187,8 @@ public class Cannon extends EntityObj{
   public void launch() {
     if (!active) return;
     
+    lives--;
+    livetext.setText("x"+lives);
     float degrees = -1*sprite.getRotation();
     float[] location = squirrel.convertLocalCoordinatesToSceneCoordinates(squirrel.getWidth()/2, squirrel.getHeight()/2);
     PlayerEntity player = new PlayerEntity(parent, location[0], location[1]);

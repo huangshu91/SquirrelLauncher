@@ -157,7 +157,7 @@ public class World extends Scene {
     //reset number of squirrels left
     
     //reset blocks until all gone
-    while(blockMan.undoBlock()) { }
+    while(blockMan.undoBlock() != null) { }
     mCamera.setCenter(cannon.getX(), cannon.getY());
   }
   

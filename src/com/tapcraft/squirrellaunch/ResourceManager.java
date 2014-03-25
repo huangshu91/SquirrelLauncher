@@ -261,5 +261,15 @@ public class ResourceManager {
     loadfont.prepareLetters(Config.PREPARE_ALPHA.toCharArray());
     loadfont.load();
     ResourceManager.addFont(loadfont, Config.FON_GROBOLD);
+    
+    BitmapTextureAtlas mFontTexture = new BitmapTextureAtlas(parent.getTextureManager(), 
+        256, 256, TextureOptions.BILINEAR);
+    Font mFont = FontFactory.createStrokeFromAsset(parent.getFontManager(), 
+        mFontTexture, parent.getAssets(), Config.FON_HUD, 32, true, 
+        org.andengine.util.adt.color.Color.WHITE_ABGR_PACKED_INT, 3, 
+        org.andengine.util.adt.color.Color.BLACK_ABGR_PACKED_INT);
+    mFont.prepareLetters(Config.PREPARE_HUD.toCharArray());
+    mFont.load();
+    ResourceManager.addFont(mFont, Config.FON_HUD);
   }
 }

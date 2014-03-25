@@ -1,13 +1,16 @@
 package com.tapcraft.squirrellaunch;
 
 import java.util.ArrayList;
+import java.util.EnumMap;
 
 import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.camera.hud.HUD;
 import org.andengine.entity.primitive.Line;
 import org.andengine.entity.sprite.Sprite;
+import org.andengine.entity.text.Text;
 import org.andengine.input.touch.TouchEvent;
 
+import com.tapcraft.entity.BlockObj;
 import com.tapcraft.levels.World;
 
 public class HudManager {
@@ -16,6 +19,9 @@ public class HudManager {
   private HUD           gameHud;
   private World         parent;
   private ArrayList<Sprite> buttons;
+  private ArrayList<Text>   blockleft;
+  
+  private EnumMap<Config.Block, Integer> blockind;
   
   private boolean active;
   
@@ -24,7 +30,9 @@ public class HudManager {
     active = true;
     gameHud = new HUD();
     cameraMan = parent.getCameraMan();
-    buttons = new ArrayList<Sprite> ();
+    buttons = new ArrayList<Sprite>();
+    blockleft = new ArrayList<Text>();
+    blockind = new EnumMap<Config.Block, Integer> (Config.Block.class);
   }
   
   public void initHud() {
@@ -62,6 +70,8 @@ public class HudManager {
     
     Sprite newblock = new Sprite(x, y, ResourceManager.textureHashMap.get(Config.Block.map.get(b)), 
         GameEngine.getSharedInstance().getVertexBufferObjectManager()) {
+      private Config.Block type = b;
+      
       @Override
       public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, 
           final float pTouchAreaLocalY) {
@@ -70,22 +80,27 @@ public class HudManager {
         case TouchEvent.ACTION_DOWN:
           SmoothCamera cam = cameraMan.getCamera();
           parent.getBlockMan().createBlock(b, cam.getCenterX(), cam.getCenterY());
+          Text child = (Text) this.getFirstChild();
+          child.setText("x"+parent.getBlockMan().getBlockCount(type));
           break;
         }
         
         return true;
       }
-      
     };
+    
+    Text butText = new Text(newblock.getWidth() - Config.HUD_PAD, Config.HUD_PAD, ResourceManager.fontHashMap.get(Config.FON_HUD), 
+        "x"+numBlock, 3, GameEngine.getSharedInstance().getVertexBufferObjectManager());
+    //butText.setText("x"+numBlock);
+    butText.setUserData(b);
+    newblock.attachChild(butText);
+    blockind.put(b, buttons.size());
+    blockleft.add(butText);
     buttons.add(newblock);
     parent.getBlockMan().addBlockCount(b,  numBlock);
     newblock.setUserData(b);
     gameHud.attachChild(newblock);
     gameHud.registerTouchArea(newblock);
-  }
-  
-  public void detachButton(Config.Block b) {
-    
   }
   
   public void toggleActive() {
@@ -104,7 +119,18 @@ public class HudManager {
         if (!active) return false;
         switch(pSceneTouchEvent.getAction()) {
         case TouchEvent.ACTION_UP:
-          parent.getBlockMan().undoBlock();
+          BlockObj last = parent.getBlockMan().undoBlock();
+          if (last != null) {
+            Text num = null;
+            for (Text t: blockleft) {
+              Config.Block type = (Config.Block)t.getUserData(); 
+              if (type == last.getType()) {
+                num = t;
+                break;
+              }
+            }
+            num.setText("x"+parent.getBlockMan().getBlockCount(last.getType()));
+          }
           break;
         }
         return true;
@@ -128,6 +154,10 @@ public class HudManager {
         switch(pSceneTouchEvent.getAction()) {
         case TouchEvent.ACTION_UP:
           parent.clearWorld();
+          for (Text t: blockleft) {
+            int num = parent.getBlockMan().getBlockCount((Config.Block)t.getUserData());
+            t.setText("x"+num);
+          }
           break;
         }
         return true;
@@ -135,5 +165,6 @@ public class HudManager {
     };
     
     gameHud.attachChild(but_clear);
+    gameHud.registerTouchArea(but_clear);
   }
 }

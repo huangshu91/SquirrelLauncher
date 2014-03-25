@@ -27,19 +27,21 @@ public interface Config {
 
   public static String GFX_PATH = "gfx/";
   
+  //FONTS
+  public static String FON_GROBOLD = "fonts/GROBOLD.ttf";
+  public static String FON_HUD = "fonts/GROBOLD.ttf";
+  
+  public static String PREPARE_ALPHA = "abcdefghijklmnopqrstuvwxyz";
+  public static String PREPARE_HUD = "x0123456789";
+  
+  //CONSTANTS
+  public static float[] IMPULSE = { 40.0f, 0 };
+
   public static final FixtureDef FIXTURE_DEF = 
       PhysicsFactory.createFixtureDef(1, 0.5f, 0.5f);
   
   public static final float WALK_MODIFIER = 3.0f;
   public static final int PIXEL_METER_RATIO = 32;
-  
-  public static String FON_GROBOLD = "fonts/GROBOLD.ttf";
-  
-  public static String PREPARE_ALPHA = "abcdefghijklmnopqrstuvwxyz";
-  
-  //CONSTANTS
-  
-  public static float[] IMPULSE = { 40.0f, 0 };
   
   //BUTTONS
   public static String BUTTON_WOOD = "hud_wood.png";
@@ -107,4 +109,7 @@ public interface Config {
   public static String ACORN_ID = "acorn";
   public static String RESET_ID = "ground";
   public static String ACCEL_ID = "accel";
+  
+  //PLAYER
+  public static int NUM_LIVES = 3;
 }
