@@ -1,6 +1,5 @@
 package com.tapcraft.entity;
 
-import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.extension.physics.box2d.PhysicsConnector;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
@@ -22,7 +21,7 @@ public class PlayerEntity extends EntityObj{
   
   PhysicsConnector pcon;
   
-  public IUpdateHandler checkReset;
+  //public IUpdateHandler checkReset;
   
   public PlayerEntity(World w, float x, float y) {
     super(w, x, y);
@@ -82,16 +81,36 @@ public class PlayerEntity extends EntityObj{
   }
   
   public void detachSelf() {
+    GameEngine.getSharedInstance().runOnUpdateThread(new Runnable() {
+      @Override
+      public void run() {
+        parent.unregisterTouchArea(sprite);
+        parent.detachChild(sprite);
+        physWorld.unregisterPhysicsConnector(pcon);
+        physBody.setActive(false);
+        physWorld.destroyBody(physBody);
+        parent.setPlayer(null);
+      }
+    });
+    /*
     parent.unregisterTouchArea(sprite);
     parent.detachChild(sprite);
     physWorld.unregisterPhysicsConnector(pcon);
     physBody.setActive(false);
     physWorld.destroyBody(physBody);
     parent.setPlayer(null);
+    */
   }
   
   public Body getBody() {
     return physBody;
   }
   
+  public float getX() {
+    return sprite.getX();
+  }
+  
+  public float getY() {
+    return sprite.getY();
+  }
 }

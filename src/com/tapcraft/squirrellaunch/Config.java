@@ -94,9 +94,13 @@ public interface Config {
   public static String CANNON = "cannon.png";
   public static String CIRCLE = "sim_circle_anim.png";
   public static String ACORN = "acornshine.png";
+  public static String DUST = "dustball.png";
   
   public static String ACORN_STATIC = "acorn_gold.png";
   public static String ACORN_MOLD = "acorn_mold.png";
+  
+  //MENU
+  public static String MENU_LEVELEND = "menu_levelend.png";
   
   //CAMERA
   public static float CAM_VEL = 600;

@@ -15,7 +15,7 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.util.adt.color.Color;
 
-public class ResourceManager {
+public final class ResourceManager {
   public static HashMap<String, ITextureRegion> textureHashMap = new HashMap<String, ITextureRegion>();
   public static HashMap<String, Font>           fontHashMap = new HashMap<String, Font>();
   
@@ -46,6 +46,32 @@ public class ResourceManager {
     }
     buildableTextureAtlas.load();
     ResourceManager.addTexture(splash, Config.TEX_SPLASH);
+    
+    //load menu level end
+    buildableTextureAtlas = 
+        new BuildableBitmapTextureAtlas(parent.getTextureManager(), 660, 630, TextureOptions.BILINEAR);
+    splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
+        parent, Config.MENU_LEVELEND);
+    try {
+      buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
+    } catch (TextureAtlasBuilderException e) {
+      e.printStackTrace();
+    }
+    buildableTextureAtlas.load();
+    ResourceManager.addTexture(splash, Config.MENU_LEVELEND);
+    
+    //load dustball
+    buildableTextureAtlas = 
+        new BuildableBitmapTextureAtlas(parent.getTextureManager(), 180, 170, TextureOptions.BILINEAR);
+    splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
+        parent, Config.DUST);
+    try {
+      buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
+    } catch (TextureAtlasBuilderException e) {
+      e.printStackTrace();
+    }
+    buildableTextureAtlas.load();
+    ResourceManager.addTexture(splash, Config.DUST);
     
     //load cannon launch button
     buildableTextureAtlas = 

@@ -21,6 +21,7 @@ import com.tapcraft.entity.GoldenAcorn;
 import com.tapcraft.entity.PlayerEntity;
 import com.tapcraft.squirrellaunch.CameraManager;
 import com.tapcraft.squirrellaunch.Config;
+import com.tapcraft.squirrellaunch.EffectManager;
 import com.tapcraft.squirrellaunch.GameEngine;
 import com.tapcraft.squirrellaunch.HudManager;
 import com.tapcraft.squirrellaunch.ObjectFactory;
@@ -39,6 +40,7 @@ public class World extends Scene {
   protected HUD gameHud;
   protected CameraManager cameraMan;
   protected SmoothCamera mCamera;
+  protected EffectManager effectMan;
   
   protected PlayerEntity player;
   protected Cannon cannon;
@@ -55,10 +57,11 @@ public class World extends Scene {
     parent.setCurrentScene(this);
     cameraMan = parent.cameraMan;
     mCamera = cameraMan.getCamera();
+    effectMan = new EffectManager(this);
     WORLD_WIDTH = w;
     WORLD_HEIGHT = h;
     touchLocked = false;
-
+    
     bounds = new Entity();
 
     setTouchAreaBindingOnActionDownEnabled(true);
@@ -70,6 +73,10 @@ public class World extends Scene {
   
   public int getWorldHeight() {
     return WORLD_HEIGHT;
+  }
+  
+  public EffectManager getEffectMan() {
+    return effectMan;
   }
   
   public BlockManager getBlockMan() {

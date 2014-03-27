@@ -6,7 +6,7 @@ import com.tapcraft.entity.BlockManager;
 import com.tapcraft.entity.Cannon;
 import com.tapcraft.entity.GoldenAcorn;
 import com.tapcraft.physics.SimContactListener;
-import com.tapcraft.physics.WinContactListener;
+import com.tapcraft.physics.WorldListener;
 import com.tapcraft.squirrellaunch.Config;
 import com.tapcraft.squirrellaunch.HudManager;
 
@@ -37,7 +37,7 @@ public class World1Level1 extends World{
     
     cannon = new Cannon(this, 250,200);
     acorn = new GoldenAcorn(this, 1600, 300);
-    physWorld.setContactListener(new WinContactListener(this));
+    physWorld.setContactListener(new WorldListener(this));
     simWorld.setContactListener(new SimContactListener(this));
     
     cannonActive = true;

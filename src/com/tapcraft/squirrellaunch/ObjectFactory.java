@@ -7,7 +7,7 @@ import org.andengine.entity.sprite.AnimatedSprite;
 import org.andengine.entity.text.Text;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 
-public class ObjectFactory {
+public final class ObjectFactory {
   public static Sprite createSprite(float x, float y, String texture) {
     return new Sprite(x, y, ResourceManager.textureHashMap.get(texture), 
         GameEngine.getSharedInstance().getVertexBufferObjectManager());

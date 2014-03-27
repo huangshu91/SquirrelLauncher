@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.tapcraft.levels.World;
 import com.tapcraft.util.Logger;
 
-public class CameraManager implements IOnSceneTouchListener,
+public final class CameraManager implements IOnSceneTouchListener,
     IPinchZoomDetectorListener, IScrollDetectorListener {
 
   private SmoothCamera          mCamera;

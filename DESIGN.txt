@@ -23,3 +23,14 @@ Obstacles
 
 Mechanics
 	Some sort of scoring mechanism?  Airtime?  Num blocks used? 
+
+Graphics
+	Consider remaking everything in Okami-esque style.  Would look quite nice for this kind of game.  Style kind of hard to emulate though.
+
+Animations
+	Ease functions for movement. Most text?
+
+-----------NOTES----------
+
+AniManager is for animation effects, ie. entity modifiers.
+EffectsManager is for creating and managing effects such as dust, particle, etc.

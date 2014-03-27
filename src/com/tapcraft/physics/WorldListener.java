@@ -3,6 +3,7 @@ package com.tapcraft.physics;
 import org.andengine.engine.handler.timer.ITimerCallback;
 import org.andengine.engine.handler.timer.TimerHandler;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -13,13 +14,13 @@ import com.tapcraft.squirrellaunch.Config;
 import com.tapcraft.util.Logger;
 import com.tapcraft.util.Physics;
 
-public class WinContactListener implements ContactListener {
+public class WorldListener implements ContactListener {
   private World parent;
   
   private TimerHandler resetTimer;
   private boolean hitGround;
 
-  public WinContactListener(World w) {
+  public WorldListener(World w) {
     parent = w;
     resetTimer = new TimerHandler(2f, true, new ITimerCallback() {
       @Override
@@ -39,6 +40,8 @@ public class WinContactListener implements ContactListener {
         parent.beatWorld();
       }
       else if (Physics.checkContact(contact, Config.PLAYER_ID, Config.RESET_ID)) {
+        parent.getEffectMan().createDustCloud(parent.getPlayer().getX(), parent.getPlayer().getY(), 0.6f);
+        
         if (hitGround) return;
         hitGround = true;
         parent.registerUpdateHandler(resetTimer);
@@ -65,43 +68,5 @@ public class WinContactListener implements ContactListener {
   @Override
   public void postSolve(Contact contact, ContactImpulse impulse) {
     // TODO Auto-generated method stub
-  }
-  
-  public boolean checkWin(Contact contact) {
-    String objA = (String) contact.getFixtureA().getBody().getUserData();
-    String objB = (String) contact.getFixtureB().getBody().getUserData();
-    
-    if (objA == null || objB == null) return false;
-    
-    if (objA.equals(Config.ACORN_ID)) {
-      if (objB.equals(Config.PLAYER_ID)) return true;
-      return false;
-    }
-    else if (objA.equals(Config.PLAYER_ID)){
-      if (objB.equals(Config.ACORN_ID)) return true;
-      return false;
-    }
-    
-    return false;
-  }
-  
-  public boolean checkReset(Contact contact) {
-    if (hitGround) return false;
-    
-    String objA = (String) contact.getFixtureA().getBody().getUserData();
-    String objB = (String) contact.getFixtureB().getBody().getUserData();
-    
-    if (objA == null || objB == null) return false;
-    
-    if (objA.equals(Config.RESET_ID)) {
-      if (objB.equals(Config.PLAYER_ID)) return true;
-      return false;
-    }
-    else if (objA.equals(Config.PLAYER_ID)){
-      if (objB.equals(Config.RESET_ID)) return true;
-      return false;
-    }
-    
-    return false;
   }
 }

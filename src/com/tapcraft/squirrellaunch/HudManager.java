@@ -13,7 +13,7 @@ import org.andengine.input.touch.TouchEvent;
 import com.tapcraft.entity.BlockObj;
 import com.tapcraft.levels.World;
 
-public class HudManager {
+public final class HudManager {
   
   private CameraManager cameraMan;
   private HUD           gameHud;

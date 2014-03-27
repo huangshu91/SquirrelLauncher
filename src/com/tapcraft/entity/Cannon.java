@@ -207,6 +207,7 @@ public class Cannon extends EntityObj{
     parent.getHudMan().getHud().detachChild(but);
     parent.unregisterTouchArea(sprite);
     sprite.detachChild(squirrel);
+    parent.getEffectMan().createDustCloud(location[0], location[1], 1);
   }
   
 }
