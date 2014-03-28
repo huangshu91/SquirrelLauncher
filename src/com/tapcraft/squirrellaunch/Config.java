@@ -32,7 +32,7 @@ public interface Config {
   public static String FON_HUD = "fonts/GROBOLD.ttf";
   
   public static String PREPARE_ALPHA = "abcdefghijklmnopqrstuvwxyz";
-  public static String PREPARE_HUD = "x0123456789";
+  public static String PREPARE_HUD = "x0123456789abcdefghijklmnopqrstuvwxyz";
   
   //CONSTANTS
   public static float[] IMPULSE = { 40.0f, 0 };
@@ -84,9 +84,11 @@ public interface Config {
   public static int HUD_PAD = 10;
   public static int BUTTON_SIZE = 90;
   public static int BUTTON_S_SIZE = 60;
+  public static float DOWN_SCALE = 1.1f;
   
   //DEBUG
   public static boolean DEBUG = true;
+  public static String DEBUG_NOT = "DEBUG_MODE";
   
   //SPRITE
   public static String TEX_SPLASH = "splashscreen.png";

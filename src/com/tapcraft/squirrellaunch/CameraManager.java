@@ -1,8 +1,12 @@
 package com.tapcraft.squirrellaunch;
 
 import org.andengine.engine.camera.SmoothCamera;
+import org.andengine.entity.modifier.ScaleModifier;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
+import org.andengine.entity.scene.background.IBackground;
+import org.andengine.entity.scene.background.ParallaxBackground;
+import org.andengine.entity.sprite.Sprite;
 import org.andengine.input.touch.TouchEvent;
 import org.andengine.input.touch.controller.MultiTouch;
 import org.andengine.input.touch.detector.PinchZoomDetector;
@@ -57,6 +61,14 @@ public final class CameraManager implements IOnSceneTouchListener,
     return mCamera;
   }
   
+  public float getX() {
+    return mCamera.getCenterX();
+  }
+  
+  public float getY() {
+    return mCamera.getCenterY();
+  }
+  
   public void setWorld(World w) {
     curWorld = w;
   }
@@ -105,8 +117,9 @@ public final class CameraManager implements IOnSceneTouchListener,
       //if (Config.CAMERA_HEIGHT/newZoom > curWorld.getWorldHeight() || 
       //    Config.CAMERA_WIDTH/newZoom > curWorld.getWorldWidth()) return;
       
-      if (newZoom <= Config.MAX_ZOOM && newZoom >= Config.MIN_ZOOM) 
+      if (newZoom <= Config.MAX_ZOOM && newZoom >= Config.MIN_ZOOM) {
         mCamera.setZoomFactor(newZoom);
+      }
     }
 
   }

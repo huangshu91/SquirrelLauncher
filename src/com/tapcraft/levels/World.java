@@ -187,6 +187,8 @@ public class World extends Scene {
   }
   
   public void beatWorld() {
-    
+    if (hudMan != null) {
+      hudMan.setDebugText("Clear");
+    }
   }
 }

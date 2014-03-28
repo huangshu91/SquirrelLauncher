@@ -23,6 +23,8 @@ public final class HudManager {
   
   private EnumMap<Config.Block, Integer> blockind;
   
+  private Text debugtext;
+  
   private boolean active;
   
   public HudManager(World w) {
@@ -33,6 +35,10 @@ public final class HudManager {
     buttons = new ArrayList<Sprite>();
     blockleft = new ArrayList<Text>();
     blockind = new EnumMap<Config.Block, Integer> (Config.Block.class);
+    
+    debugtext = new Text(Config.CAMERA_WIDTH/2, Config.HUD_PAD*2, ResourceManager.fontHashMap.get(Config.FON_HUD), 
+        Config.DEBUG_NOT, 40, GameEngine.getSharedInstance().getVertexBufferObjectManager());
+    if (Config.DEBUG) gameHud.attachChild(debugtext);
   }
   
   public void initHud() {
@@ -64,6 +70,10 @@ public final class HudManager {
     return gameHud;
   }
   
+  public void setDebugText(String t) {
+    debugtext.setText(t);
+  }
+  
   public void attachButton(final Config.Block b, int numBlock) {
     float x = Config.HUD_PAD*(1+buttons.size()) + (buttons.size()*Config.BUTTON_SIZE) + Config.BUTTON_SIZE/2;
     float y = Config.CAMERA_HEIGHT - Config.HUD_PAD - Config.BUTTON_SIZE/2;
@@ -82,6 +92,10 @@ public final class HudManager {
           parent.getBlockMan().createBlock(b, cam.getCenterX(), cam.getCenterY());
           Text child = (Text) this.getFirstChild();
           child.setText("x"+parent.getBlockMan().getBlockCount(type));
+          this.setScale(Config.DOWN_SCALE);
+          break;
+        case TouchEvent.ACTION_UP:
+          this.setScale(1.0f);
           break;
         }
         
@@ -118,6 +132,9 @@ public final class HudManager {
           final float pTouchAreaLocalY) {
         if (!active) return false;
         switch(pSceneTouchEvent.getAction()) {
+        case TouchEvent.ACTION_DOWN:
+          this.setScale(Config.DOWN_SCALE);
+          break;
         case TouchEvent.ACTION_UP:
           BlockObj last = parent.getBlockMan().undoBlock();
           if (last != null) {
@@ -131,7 +148,9 @@ public final class HudManager {
             }
             num.setText("x"+parent.getBlockMan().getBlockCount(last.getType()));
           }
+          this.setScale(1.0f);
           break;
+          
         }
         return true;
       }
@@ -152,12 +171,16 @@ public final class HudManager {
           final float pTouchAreaLocalY) {
         if (!active) return false;
         switch(pSceneTouchEvent.getAction()) {
+        case TouchEvent.ACTION_DOWN:
+          this.setScale(Config.DOWN_SCALE);
+          break;
         case TouchEvent.ACTION_UP:
           parent.clearWorld();
           for (Text t: blockleft) {
             int num = parent.getBlockMan().getBlockCount((Config.Block)t.getUserData());
             t.setText("x"+num);
           }
+          this.setScale(1.0f);
           break;
         }
         return true;

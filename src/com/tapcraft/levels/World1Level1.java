@@ -5,6 +5,7 @@ import org.andengine.entity.scene.background.Background;
 import com.tapcraft.entity.BlockManager;
 import com.tapcraft.entity.Cannon;
 import com.tapcraft.entity.GoldenAcorn;
+import com.tapcraft.entity.ParallaxObject;
 import com.tapcraft.physics.SimContactListener;
 import com.tapcraft.physics.WorldListener;
 import com.tapcraft.squirrellaunch.Config;
@@ -31,12 +32,14 @@ public class World1Level1 extends World{
     hudMan.initHud();
     setupHud();
     
-    
     initPhysWorld();
     initBounds();
     
+    ParallaxObject po = new ParallaxObject(this, 100, 0.5f, "test1");
+    
     cannon = new Cannon(this, 250,200);
-    acorn = new GoldenAcorn(this, 1600, 300);
+    //acorn = new GoldenAcorn(this, 1600, 300);
+    acorn = new GoldenAcorn(this, 1000, 300);
     physWorld.setContactListener(new WorldListener(this));
     simWorld.setContactListener(new SimContactListener(this));
     

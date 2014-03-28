@@ -275,6 +275,31 @@ public final class ResourceManager {
     buildableTextureAtlas.load();
     ResourceManager.addTexture(splash, Config.ACORN_MOLD);
     
+    //load parallax backgrounds
+    buildableTextureAtlas = 
+        new BuildableBitmapTextureAtlas(parent.getTextureManager(), 650, 200, TextureOptions.BILINEAR);
+    splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
+        parent, "parallax_background_layer_front.png");
+    try {
+      buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
+    } catch (TextureAtlasBuilderException e) {
+      e.printStackTrace();
+    }
+    buildableTextureAtlas.load();
+    ResourceManager.addTexture(splash, "test1");
+    
+    buildableTextureAtlas = 
+        new BuildableBitmapTextureAtlas(parent.getTextureManager(), 640, 85, TextureOptions.BILINEAR);
+    splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
+        parent, "parallax_background_layer_mid.png");
+    try {
+      buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
+    } catch (TextureAtlasBuilderException e) {
+      e.printStackTrace();
+    }
+    buildableTextureAtlas.load();
+    ResourceManager.addTexture(splash, "test2");
+    
     loadFonts();
   }
   
