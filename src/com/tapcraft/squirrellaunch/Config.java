@@ -97,6 +97,7 @@ public interface Config {
   public static String CIRCLE = "sim_circle_anim.png";
   public static String ACORN = "acornshine.png";
   public static String DUST = "dustball.png";
+  public static String STAR = "star.png";
   
   public static String ACORN_STATIC = "acorn_gold.png";
   public static String ACORN_MOLD = "acorn_mold.png";
@@ -122,5 +123,11 @@ public interface Config {
   //PARALLAX_BG
   public static String PARALLAX_GRASS_FORE = "parallax_grass_fore.png";
   public static int GRASS_OFFSET = -79;
+  public static String PARALLAX_FOREST_MID = "parallax_forest_mid.png";
+  public static int FOREST_OFFSET = 0;
+  public static String PARALLAX_MOUNT_BACK = "parallax_mountain_back.png";
+  public static int MOUNTAIN_OFFSET = 0;
+  public static String PARALLAX_CLOUD_BACK = "parallax_cloud_back.png";
+  public static int CLOUD_OFFSET = 0;
   
 }

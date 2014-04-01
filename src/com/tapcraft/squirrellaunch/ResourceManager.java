@@ -73,6 +73,19 @@ public final class ResourceManager {
     buildableTextureAtlas.load();
     ResourceManager.addTexture(splash, Config.DUST);
     
+    //load star
+    buildableTextureAtlas = 
+        new BuildableBitmapTextureAtlas(parent.getTextureManager(), 170, 170, TextureOptions.BILINEAR);
+    splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
+        parent, Config.STAR);
+    try {
+      buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
+    } catch (TextureAtlasBuilderException e) {
+      e.printStackTrace();
+    }
+    buildableTextureAtlas.load();
+    ResourceManager.addTexture(splash, Config.STAR);
+    
     //load cannon launch button
     buildableTextureAtlas = 
         new BuildableBitmapTextureAtlas(parent.getTextureManager(), 100, 100, TextureOptions.BILINEAR);
@@ -277,18 +290,6 @@ public final class ResourceManager {
     
     //load parallax backgrounds
     buildableTextureAtlas = 
-        new BuildableBitmapTextureAtlas(parent.getTextureManager(), 650, 200, TextureOptions.BILINEAR);
-    splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
-        parent, "parallax_background_layer_front.png");
-    try {
-      buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
-    } catch (TextureAtlasBuilderException e) {
-      e.printStackTrace();
-    }
-    buildableTextureAtlas.load();
-    ResourceManager.addTexture(splash, "test1");
-    
-    buildableTextureAtlas = 
         new BuildableBitmapTextureAtlas(parent.getTextureManager(), 460, 320, TextureOptions.BILINEAR);
     splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
         parent, Config.PARALLAX_GRASS_FORE);
@@ -299,6 +300,42 @@ public final class ResourceManager {
     }
     buildableTextureAtlas.load();
     ResourceManager.addTexture(splash, Config.PARALLAX_GRASS_FORE);
+    
+    buildableTextureAtlas = 
+        new BuildableBitmapTextureAtlas(parent.getTextureManager(), 460, 270, TextureOptions.BILINEAR);
+    splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
+        parent, Config.PARALLAX_FOREST_MID);
+    try {
+      buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
+    } catch (TextureAtlasBuilderException e) {
+      e.printStackTrace();
+    }
+    buildableTextureAtlas.load();
+    ResourceManager.addTexture(splash, Config.PARALLAX_FOREST_MID);
+    
+    buildableTextureAtlas = 
+        new BuildableBitmapTextureAtlas(parent.getTextureManager(), 560, 210, TextureOptions.BILINEAR);
+    splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
+        parent, Config.PARALLAX_MOUNT_BACK);
+    try {
+      buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
+    } catch (TextureAtlasBuilderException e) {
+      e.printStackTrace();
+    }
+    buildableTextureAtlas.load();
+    ResourceManager.addTexture(splash, Config.PARALLAX_MOUNT_BACK);
+    
+    buildableTextureAtlas = 
+        new BuildableBitmapTextureAtlas(parent.getTextureManager(), 670, 110, TextureOptions.BILINEAR);
+    splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
+        parent, Config.PARALLAX_CLOUD_BACK);
+    try {
+      buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
+    } catch (TextureAtlasBuilderException e) {
+      e.printStackTrace();
+    }
+    buildableTextureAtlas.load();
+    ResourceManager.addTexture(splash, Config.PARALLAX_CLOUD_BACK);
     
     loadFonts();
   }
