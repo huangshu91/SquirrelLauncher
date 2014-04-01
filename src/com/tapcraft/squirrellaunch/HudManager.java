@@ -5,6 +5,7 @@ import java.util.EnumMap;
 
 import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.camera.hud.HUD;
+import org.andengine.entity.IEntity;
 import org.andengine.entity.primitive.Line;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
@@ -189,5 +190,9 @@ public final class HudManager {
     
     gameHud.attachChild(but_clear);
     gameHud.registerTouchArea(but_clear);
+  }
+  
+  public void attachEntity(IEntity ie) {
+    gameHud.attachChild(ie);
   }
 }

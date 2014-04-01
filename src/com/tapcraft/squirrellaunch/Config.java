@@ -118,4 +118,9 @@ public interface Config {
   
   //PLAYER
   public static int NUM_LIVES = 3;
+  
+  //PARALLAX_BG
+  public static String PARALLAX_GRASS_FORE = "parallax_grass_fore.png";
+  public static int GRASS_OFFSET = -79;
+  
 }

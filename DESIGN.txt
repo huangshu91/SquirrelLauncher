@@ -23,14 +23,19 @@ Obstacles
 
 Mechanics
 	Some sort of scoring mechanism?  Airtime?  Num blocks used? 
+D:\programs\eclipse_java_cs125_32\eclipse\plugins\org.eclipse.equinox.launcher_1.3.0.v20120522-1813.jar
 
-Graphics
 	Consider remaking everything in Okami-esque style.  Would look quite nice for this kind of game.  Style kind of hard to emulate though.
 
 Animations
 	Ease functions for movement. Most text?
 
+Level Clear
+	Grey (dark) out the screen while transitioning? "clear" before level end menu appears?  Detach other hud elements?
+
 -----------NOTES----------
 
 AniManager is for animation effects, ie. entity modifiers.
 EffectsManager is for creating and managing effects such as dust, particle, etc.
+
+Remember to add padding for textures otherwise they might not load correctly

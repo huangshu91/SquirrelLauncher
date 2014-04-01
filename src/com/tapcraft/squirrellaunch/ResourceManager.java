@@ -49,7 +49,7 @@ public final class ResourceManager {
     
     //load menu level end
     buildableTextureAtlas = 
-        new BuildableBitmapTextureAtlas(parent.getTextureManager(), 660, 630, TextureOptions.BILINEAR);
+        new BuildableBitmapTextureAtlas(parent.getTextureManager(), 650, 630, TextureOptions.BILINEAR);
     splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
         parent, Config.MENU_LEVELEND);
     try {
@@ -289,16 +289,16 @@ public final class ResourceManager {
     ResourceManager.addTexture(splash, "test1");
     
     buildableTextureAtlas = 
-        new BuildableBitmapTextureAtlas(parent.getTextureManager(), 640, 85, TextureOptions.BILINEAR);
+        new BuildableBitmapTextureAtlas(parent.getTextureManager(), 460, 320, TextureOptions.BILINEAR);
     splash = BitmapTextureAtlasTextureRegionFactory.createFromAsset(buildableTextureAtlas, 
-        parent, "parallax_background_layer_mid.png");
+        parent, Config.PARALLAX_GRASS_FORE);
     try {
       buildableTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 1));
     } catch (TextureAtlasBuilderException e) {
       e.printStackTrace();
     }
     buildableTextureAtlas.load();
-    ResourceManager.addTexture(splash, "test2");
+    ResourceManager.addTexture(splash, Config.PARALLAX_GRASS_FORE);
     
     loadFonts();
   }
