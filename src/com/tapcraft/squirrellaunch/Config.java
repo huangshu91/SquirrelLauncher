@@ -13,8 +13,8 @@ public interface Config {
     SPLASH, MENU, PLAY
   }
   
-  public enum GameLevels {
-    LEVEL_ONE, LEVEL_TWO
+  public enum World {
+    GRASS
   }
   
   // Test this resolution because there is some stretching
@@ -25,14 +25,14 @@ public interface Config {
   
   public static final String TAG = "TapCraft";
 
-  public static String GFX_PATH = "gfx/";
+  public static final String GFX_PATH = "gfx/";
   
   //FONTS
-  public static String FON_GROBOLD = "fonts/GROBOLD.ttf";
-  public static String FON_HUD = "fonts/GROBOLD.ttf";
+  public static final String FON_GROBOLD = "fonts/GROBOLD.ttf";
+  public static final String FON_HUD = "fonts/GROBOLD.ttf";
   
-  public static String PREPARE_ALPHA = "abcdefghijklmnopqrstuvwxyz";
-  public static String PREPARE_HUD = "x0123456789abcdefghijklmnopqrstuvwxyz";
+  public static final String PREPARE_ALPHA = "abcdefghijklmnopqrstuvwxyz";
+  public static final String PREPARE_HUD = "x0123456789abcdefghijklmnopqrstuvwxyz";
   
   //CONSTANTS
   public static float[] IMPULSE = { 40.0f, 0 };
@@ -44,19 +44,19 @@ public interface Config {
   public static final int PIXEL_METER_RATIO = 32;
   
   //BUTTONS
-  public static String BUTTON_WOOD = "hud_wood.png";
-  public static String BUTTON_BOUNCE = "hud_bounce.png";
-  public static String BUTTON_ACCEL = "hud_accel.png";
-  public static String BUTTON_LAUNCH = "hud_launch.png";
-  public static String BUTTON_UNDO = "button_undo.png";
-  public static String BUTTON_CLEAR = "button_clear.png";
+  public static final String BUTTON_WOOD = "hud_wood.png";
+  public static final String BUTTON_BOUNCE = "hud_bounce.png";
+  public static final String BUTTON_ACCEL = "hud_accel.png";
+  public static final String BUTTON_LAUNCH = "hud_launch.png";
+  public static final String BUTTON_UNDO = "button_undo.png";
+  public static final String BUTTON_CLEAR = "button_clear.png";
   
   //BLOCKS
-  public static String BLOCK_WOOD = "blockwood.png";
-  public static String BLOCK_BOUNCE = "blockbounce.png";
-  public static String BLOCK_ACCEL = "blockaccel.png";
+  public static final String BLOCK_WOOD = "blockwood.png";
+  public static final String BLOCK_BOUNCE = "blockbounce.png";
+  public static final String BLOCK_ACCEL = "blockaccel.png";
   
-  public static String BLOCK_HALO = "blockhalo.png";
+  public static final String BLOCK_HALO = "blockhalo.png";
   
   public static final FixtureDef WOOD_FIXDEF = 
       PhysicsFactory.createFixtureDef(0, 0.3f, 0f);
@@ -64,8 +64,8 @@ public interface Config {
       PhysicsFactory.createFixtureDef(0, 1.0f, 0f);
   public static float ACCEL_RATE = 1.4f;
   
-  public static int NUMBLOCK = 9;
-  public static String[] BlockHud = { Config.BUTTON_WOOD, Config.BUTTON_BOUNCE,
+  public static final int NUMBLOCK = 9;
+  public static final String[] BlockHud = { Config.BUTTON_WOOD, Config.BUTTON_BOUNCE,
     Config.BUTTON_ACCEL };
   public enum Block { 
     WOOD, BOUNCE, ACCEL;
@@ -81,53 +81,73 @@ public interface Config {
   }
   
   //HUD 
-  public static int HUD_PAD = 10;
-  public static int BUTTON_SIZE = 90;
-  public static int BUTTON_S_SIZE = 60;
-  public static float DOWN_SCALE = 1.1f;
+  public static final int HUD_PAD = 10;
+  public static final int BUTTON_SIZE = 60;
+  public static final int BUTTON_S_SIZE = 60;
+  public static final float DOWN_SCALE = 1.1f;
   
   //DEBUG
-  public static boolean DEBUG = true;
-  public static String DEBUG_NOT = "DEBUG_MODE";
+  public static final boolean DEBUG = true;
+  public static final String DEBUG_NOT = "DEBUG_MODE";
   
   //SPRITE
-  public static String TEX_SPLASH = "splashscreen.png";
-  public static String PLAYER_SPRITE = "squirrelplayer.png";
-  public static String CANNON = "cannon.png";
-  public static String CIRCLE = "sim_circle_anim.png";
-  public static String ACORN = "acornshine.png";
-  public static String DUST = "dustball.png";
-  public static String STAR = "star.png";
+  public static final String TEX_SPLASH = "splashscreen.png";
+  public static final String PLAYER_SPRITE = "squirrelplayer.png";
+  public static final String CANNON = "cannon.png";
+  public static final String CIRCLE = "sim_circle_anim.png";
+  public static final String ACORN = "acornshine.png";
+  public static final String DUST = "dustball.png";
+  public static final String STAR = "star.png";
   
-  public static String ACORN_STATIC = "acorn_gold.png";
-  public static String ACORN_MOLD = "acorn_mold.png";
+  public static final String ACORN_STATIC = "acorn_gold.png";
+  public static final String ACORN_MOLD = "acorn_mold.png";
   
   //MENU
-  public static String MENU_LEVELEND = "menu_levelend.png";
+  public static final String MENU_LEVELEND = "menu_levelend.png";
   
   //CAMERA
-  public static float CAM_VEL = 600;
-  public static float CAM_ZOOM_VEL = 5;
-  public static float MAX_ZOOM = 1.0f;
-  public static float MIN_ZOOM = 0.5f;
+  public static final float CAM_VEL = 600;
+  public static final float CAM_ZOOM_VEL = 5;
+  public static final float MAX_ZOOM = 1.0f;
+  public static final float MIN_ZOOM = 0.5f;
   
   //PHYSICS
-  public static String PLAYER_ID = "player";
-  public static String ACORN_ID = "acorn";
-  public static String RESET_ID = "ground";
-  public static String ACCEL_ID = "accel";
+  public static final String PLAYER_ID = "player";
+  public static final String ACORN_ID = "acorn";
+  public static final String RESET_ID = "ground";
+  public static final String ACCEL_ID = "accel";
   
   //PLAYER
-  public static int NUM_LIVES = 3;
+  public static final int NUM_LIVES = 3;
   
   //PARALLAX_BG
-  public static String PARALLAX_GRASS_FORE = "parallax_grass_fore.png";
-  public static int GRASS_OFFSET = -79;
-  public static String PARALLAX_FOREST_MID = "parallax_forest_mid.png";
-  public static int FOREST_OFFSET = 0;
-  public static String PARALLAX_MOUNT_BACK = "parallax_mountain_back.png";
-  public static int MOUNTAIN_OFFSET = 0;
-  public static String PARALLAX_CLOUD_BACK = "parallax_cloud_back.png";
-  public static int CLOUD_OFFSET = 0;
+  public static final String PARALLAX_GRASS_FORE = "parallax_grass_fore.png";
+  public static final int GRASS_OFFSET = -79;
+  public static final String PARALLAX_FOREST_MID = "parallax_forest_mid.png";
+  public static final int FOREST_OFFSET = 90;
+  public static final String PARALLAX_MOUNT_BACK = "parallax_mountain_back.png";
+  public static final int MOUNTAIN_OFFSET = 120;
+  public static final String PARALLAX_CLOUD_BACK = "parallax_cloud_back.png";
+  public static final int CLOUD_OFFSET = 0;
+  
+  public static final float PARA_FORE = 0.0f;
+  public static final float PARA_MID = 0.3f;
+  public static final float PARA_BACK = 0.6f;
+  
+  //TEXTURE PACKER
+  public static final String TEXPACK_BASE = "gfx_pack/";
+  public static final String TEXPACK_BUTTON = "gfx_pack/buttons.xml";
+  
+  public static final int HUD_ACCEL_ID = 0;
+  public static final int HUD_BOUNCE_ID = 1;
+  public static final int HUD_LAUNCH_ID = 2;
+  public static final int HUD_WOOD_ID = 3;
+  
+  public static final String TEXPACK_PARALLAX_GRASS = "gfx_pack/parallax_grass.xml";
+  
+  public static final int PARALLAX_CLOUD_BACK_ID = 0;
+  public static final int PARALLAX_FOREST_MID_ID = 1;
+  public static final int PARALLAX_GRASS_FORE_ID = 2;
+  public static final int PARALLAX_MOUNTAIN_BACK_ID = 3;
   
 }

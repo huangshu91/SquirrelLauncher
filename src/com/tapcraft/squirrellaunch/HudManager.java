@@ -79,6 +79,8 @@ public final class HudManager {
     float x = Config.HUD_PAD*(1+buttons.size()) + (buttons.size()*Config.BUTTON_SIZE) + Config.BUTTON_SIZE/2;
     float y = Config.CAMERA_HEIGHT - Config.HUD_PAD - Config.BUTTON_SIZE/2;
     
+    if (ResourceManager.textureHashMap.get(Config.Block.map.get(b)) == null) return;
+    
     Sprite newblock = new Sprite(x, y, ResourceManager.textureHashMap.get(Config.Block.map.get(b)), 
         GameEngine.getSharedInstance().getVertexBufferObjectManager()) {
       private Config.Block type = b;

@@ -16,6 +16,7 @@ import org.andengine.input.touch.detector.ScrollDetector.IScrollDetectorListener
 import org.andengine.input.touch.detector.SurfaceScrollDetector;
 
 import com.badlogic.gdx.math.Vector2;
+import com.tapcraft.levels.BackgroundManager;
 import com.tapcraft.levels.World;
 import com.tapcraft.util.Logger;
 

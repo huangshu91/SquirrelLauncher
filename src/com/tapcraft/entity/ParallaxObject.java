@@ -11,6 +11,7 @@ import com.tapcraft.squirrellaunch.CameraManager;
 import com.tapcraft.squirrellaunch.Config;
 import com.tapcraft.squirrellaunch.GameEngine;
 import com.tapcraft.squirrellaunch.ResourceManager;
+import com.tapcraft.util.Logger;
 
 public final class ParallaxObject {
   ArrayList<Sprite> sprites;

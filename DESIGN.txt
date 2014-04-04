@@ -39,3 +39,13 @@ AniManager is for animation effects, ie. entity modifiers.
 EffectsManager is for creating and managing effects such as dust, particle, etc.
 
 Remember to add padding for textures otherwise they might not load correctly
+
+Levels_
+	To prototype levels (object and acorn placement, level size) make everything movable in debug mode and have the objects position be debug text.  This way I can note them down and hardcode (or use some json/xml loader) later.
+
+Use texturepacker to optimize textures 
+	** FIXES BILINEAR EXTRUDE WHEN STITCHING SPRITES NEXT TO EACH OTHER (parallax/bg)
+	** LOADFROMASSETS TAKES A FULL PATH AND ALSO A BASE PATH, DO NOT USE ONLY ASSET PATH
+
+ParallaxObjects
+	Rate should be a max of 0.6 due to camera movement issues.  Although logic is correct, when the camera stops moving it will look like the sprites "snap" into place, this is not a bug but a visual issue.  Consider looking into smoothing the movement in future.  

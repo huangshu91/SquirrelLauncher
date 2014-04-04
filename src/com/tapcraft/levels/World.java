@@ -35,6 +35,7 @@ public class World extends Scene {
   protected Entity bounds;
   protected Entity debug;
   
+  protected BackgroundManager backMan;
   protected BlockManager blockMan;
   protected HudManager hudMan;
   protected HUD gameHud;
@@ -58,6 +59,7 @@ public class World extends Scene {
     cameraMan = parent.cameraMan;
     mCamera = cameraMan.getCamera();
     effectMan = new EffectManager(this);
+    backMan = new BackgroundManager(this);
     WORLD_WIDTH = w;
     WORLD_HEIGHT = h;
     touchLocked = false;

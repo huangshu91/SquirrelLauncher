@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<texture version="1" file="buttons.png" type="bitmap" width="250" height="64" pixelformat="RGBA_8888" minfilter="linear" magfilter="linear" wrapt="clamp" wraps="clamp" premultiplyalpha="false">
+    <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker -->
+    <!-- $TexturePacker:SmartUpdate:df2d952b7faafc2297e42e1d335fd26c:4584f8079a844def9661cdbe3acbc5d8:76bf0e6c3a42c70952b235e5cacb8ab2$ -->
+    <textureregion id="0" src="hud_accel.png" x="188" y="2" width="60" height="60" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="60" srcheight="60"/>
+    <textureregion id="1" src="hud_bounce.png" x="126" y="2" width="60" height="60" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="60" srcheight="60"/>
+    <textureregion id="2" src="hud_launch.png" x="64" y="2" width="60" height="60" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="60" srcheight="60"/>
+    <textureregion id="3" src="hud_wood.png" x="2" y="2" width="60" height="60" rotated="false" trimmed="false" srcx="0" srcy="0" srcwidth="60" srcheight="60"/>
+</texture>

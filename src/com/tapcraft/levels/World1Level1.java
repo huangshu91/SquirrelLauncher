@@ -16,6 +16,7 @@ import com.tapcraft.squirrellaunch.Config;
 import com.tapcraft.squirrellaunch.GameEngine;
 import com.tapcraft.squirrellaunch.HudManager;
 import com.tapcraft.squirrellaunch.ResourceManager;
+import com.tapcraft.util.Logger;
 
 public class World1Level1 extends World{
   
@@ -24,7 +25,7 @@ public class World1Level1 extends World{
   
   public World1Level1() {
     super(WIDTH, HEIGHT);
-    this.setBackground(new Background(0.6f, 0.6f, 0.8f));
+    this.setBackground(new Background(0.6f, 0.9f, 1f));
     
     this.setOnSceneTouchListener(parent.cameraMan);
     
@@ -41,8 +42,7 @@ public class World1Level1 extends World{
     initPhysWorld();
     initBounds();
     
-    ParallaxObject po = new ParallaxObject(this, Config.GRASS_OFFSET, 0, 0, Config.PARALLAX_GRASS_FORE);
-    po.attach();
+    backMan.loadWorld(Config.World.GRASS);
     
     cannon = new Cannon(this, 250,200);
     //acorn = new GoldenAcorn(this, 1600, 300);
@@ -55,8 +55,12 @@ public class World1Level1 extends World{
     temp.setScale(0.6f);
     temp.registerEntityModifier(new MoveYModifier(3, 700, Config.CAMERA_HEIGHT/2, EaseBounceOut.getInstance()));
     
-    //hudMan.attachEntity(temp);
+    Sprite temp2 = new Sprite(Config.CAMERA_WIDTH/2, 700, ResourceManager.textureHashMap.get(Config.PARALLAX_CLOUD_BACK), 
+        GameEngine.getSharedInstance().getVertexBufferObjectManager());
     
+    //this.attachChild(temp2);
+    //hudMan.attachEntity(temp);
+    //test
     cannonActive = true;
   }
   
