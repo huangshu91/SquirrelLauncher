@@ -163,7 +163,7 @@ public class Cannon extends EntityObj{
       simWorld.onUpdate(1/10f);
       AnimatedSprite circle = ObjectFactory.createAnimSprite(temp.getX(), temp.getY(), Config.CIRCLE);
       if (i%2 == 0) circle.animate(150);
-      circle.setScale(0.1f);
+      circle.setScale(0.2f);
       traj.attachChild(circle);
     }
     
