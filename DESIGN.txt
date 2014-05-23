@@ -33,6 +33,9 @@ Animations
 Level Clear
 	Grey (dark) out the screen while transitioning? "clear" before level end menu appears?  Detach other hud elements?
 
+EffectManager
+	Might make more sense for effectmanager to be an effectfactory and the creator owns the effects not the manager.  refactor createdustcloud to fit this paradigm.
+
 -----------NOTES----------
 
 AniManager is for animation effects, ie. entity modifiers.
@@ -49,3 +52,12 @@ Use texturepacker to optimize textures
 
 ParallaxObjects
 	Rate should be a max of 0.6 due to camera movement issues.  Although logic is correct, when the camera stops moving it will look like the sprites "snap" into place, this is not a bug but a visual issue.  Consider looking into smoothing the movement in future.  
+
+
+-------------IDEAS------------
+
+Gameplay - Player 
+	Have a set Max airtime (afterwhich reset) but player can collect gas cannisters (?) but they are out of the way so need to balance lives left and airtime necessary to reach acorn 
+
+Graphics - levelend
+	Add curtains that slide in from side.

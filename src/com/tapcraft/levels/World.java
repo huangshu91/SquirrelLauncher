@@ -35,6 +35,7 @@ public class World extends Scene {
   protected Entity bounds;
   protected Entity debug;
   
+  protected LevelManager levelMan;
   protected BackgroundManager backMan;
   protected BlockManager blockMan;
   protected HudManager hudMan;
@@ -49,6 +50,7 @@ public class World extends Scene {
 
   protected boolean cannonActive;
   public boolean touchLocked;
+  public boolean levelClear;
   
   protected int WORLD_WIDTH;
   protected int WORLD_HEIGHT;
@@ -59,10 +61,12 @@ public class World extends Scene {
     cameraMan = parent.cameraMan;
     mCamera = cameraMan.getCamera();
     effectMan = new EffectManager(this);
+    levelMan = new LevelManager(this);
     backMan = new BackgroundManager(this);
     WORLD_WIDTH = w;
     WORLD_HEIGHT = h;
     touchLocked = false;
+    levelClear = false;
     
     bounds = new Entity();
 
@@ -189,8 +193,10 @@ public class World extends Scene {
   }
   
   public void beatWorld() {
-    if (hudMan != null) {
-      hudMan.setDebugText("Clear");
+    if (!levelClear) {
+      levelClear = true;
+      hudMan.setDebugText(Config.CLEAR_TEXT);
+      levelMan.finishWorld(1000f);
     }
   }
 }

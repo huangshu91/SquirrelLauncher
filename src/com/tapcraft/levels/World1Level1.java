@@ -1,6 +1,5 @@
 package com.tapcraft.levels;
 
-import org.andengine.entity.modifier.MoveModifier;
 import org.andengine.entity.modifier.MoveYModifier;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.sprite.Sprite;
@@ -9,14 +8,12 @@ import org.andengine.util.modifier.ease.EaseBounceOut;
 import com.tapcraft.entity.BlockManager;
 import com.tapcraft.entity.Cannon;
 import com.tapcraft.entity.GoldenAcorn;
-import com.tapcraft.entity.ParallaxObject;
 import com.tapcraft.physics.SimContactListener;
 import com.tapcraft.physics.WorldListener;
 import com.tapcraft.squirrellaunch.Config;
 import com.tapcraft.squirrellaunch.GameEngine;
 import com.tapcraft.squirrellaunch.HudManager;
 import com.tapcraft.squirrellaunch.ResourceManager;
-import com.tapcraft.util.Logger;
 
 public class World1Level1 extends World{
   
@@ -50,16 +47,16 @@ public class World1Level1 extends World{
     physWorld.setContactListener(new WorldListener(this));
     simWorld.setContactListener(new SimContactListener(this));
     
-    Sprite temp = new Sprite(Config.CAMERA_WIDTH/2, 700, ResourceManager.textureHashMap.get(Config.MENU_LEVELEND), 
+    Sprite temp = new Sprite(Config.CAMERA_WIDTH/2, Config.CAMERA_HEIGHT/2, ResourceManager.textureHashMap.get(Config.MENU_LEVELEND), 
         GameEngine.getSharedInstance().getVertexBufferObjectManager());
     temp.setScale(0.6f);
-    temp.registerEntityModifier(new MoveYModifier(3, 700, Config.CAMERA_HEIGHT/2, EaseBounceOut.getInstance()));
+    //temp.registerEntityModifier(new MoveYModifier(3, 700, Config.CAMERA_HEIGHT/2, EaseBounceOut.getInstance()));
     
     Sprite temp2 = new Sprite(Config.CAMERA_WIDTH/2, 700, ResourceManager.textureHashMap.get(Config.PARALLAX_CLOUD_BACK), 
         GameEngine.getSharedInstance().getVertexBufferObjectManager());
     
     //this.attachChild(temp2);
-    //hudMan.attachEntity(temp);
+    hudMan.attachEntity(temp);
     //test
     cannonActive = true;
   }

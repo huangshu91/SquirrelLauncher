@@ -134,6 +134,9 @@ public interface Config {
   public static final float PARA_MID = 0.3f;
   public static final float PARA_BACK = 0.6f;
   
+  //LEVEL
+  public static final String CLEAR_TEXT = "CLEAR!!";
+  
   //TEXTURE PACKER
   public static final String TEXPACK_BASE = "gfx_pack/";
   public static final String TEXPACK_BUTTON = "gfx_pack/buttons.xml";

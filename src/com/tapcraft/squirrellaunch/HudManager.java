@@ -197,4 +197,13 @@ public final class HudManager {
   public void attachEntity(IEntity ie) {
     gameHud.attachChild(ie);
   }
+  
+  public void detachEntity(final IEntity ie) {
+    GameEngine.getSharedInstance().runOnUpdateThread(new Runnable() {
+      @Override
+      public void run() {
+        gameHud.detachChild(ie);
+      }
+    });
+  }
 }
